@@ -664,8 +664,8 @@ function renderAll() {
     <div class="neighborhood" id="nbhd-${n.id}">
       <div class="nbhd-header">
         <div class="nbhd-title-wrap">
-          <div class="nbhd-name"><span style="color:var(--muted);font-family:Heebo;font-size:11px;font-weight:400;">שכונה:</span> ${n.name}</div>
-          <div class="nbhd-sub"><span style="opacity:0.6;">עיר:</span> ${n.city} · ${n.properties.length} דגמים</div>
+          <div class="nbhd-name"><span style="color:var(--muted);font-family:Heebo;font-size:11px;font-weight:400;">שכונה</span> <span dir="ltr" style="unicode-bidi:embed;">${n.name}</span></div>
+          <div class="nbhd-sub"><span style="opacity:0.6;">עיר</span> <span dir="ltr" style="unicode-bidi:embed;">${n.city}</span> <span style="opacity:0.4;">|</span> ${n.properties.length} דגמים</div>
         </div>
         <div class="nbhd-badges">
           <div class="nbhd-hoa">HOA: <span>$${n.hoa.toLocaleString()}/שנה</span></div>
@@ -703,7 +703,7 @@ function renderCard(p, n) {
       <div class="card-body">
         <div>
           ${p.recommended ? '<span class="rec-badge">מומלץ</span>' : ''}
-          <div class="model-name"><span style="color:var(--muted);font-size:10px;font-weight:400;font-family:Heebo;">דגם:</span> ${p.model}</div>
+          <div class="model-name"><span style="color:var(--muted);font-size:10px;font-weight:400;font-family:Heebo;">דגם</span> <span dir="ltr" style="unicode-bidi:embed;">${p.model}</span></div>
           <div class="price-range">${fmtRange(p)}</div>
         </div>
         <div class="specs">
