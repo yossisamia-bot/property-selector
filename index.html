@@ -595,7 +595,7 @@ function calcCashflow(priceVal, rent, finPct, annualRate, hoaAnnual) {
   const loan = priceVal * finPct;
   const mortgage = monthlyMortgage(loan, annualRate);
   const propTax = (priceVal * 0.032) / 12;
-  const insurance = 4500 / 12;
+  const insurance = 1150 / 12;
   const mgmt = rent * 0.08;
   const hoaMonthly = hoaAnnual / 12;
   const totalExp = mortgage + propTax + insurance + mgmt + hoaMonthly;
@@ -662,7 +662,10 @@ function updateCard(p) {
   lines.push(`<div>ביטוח<span>${fmt(insurance)}</span></div>`);
   lines.push(`<div>ניהול 8%<span>${fmt(mgmt)}</span></div>`);
   lines.push(`<div>HOA<span>${fmt(hoaMonthly)}</span></div>`);
-  lines.push(`<div style="border-top:1px solid var(--border);margin-top:3px;padding-top:3px;font-weight:600;color:var(--text);opacity:0.8;">סה״כ הוצאות מוערכות<span>${fmt(mortgage + propTax + insurance + mgmt + hoaMonthly)}</span></div>`);
+  lines.push(`<div style="border-top:1px solid var(--border);margin-top:3px;padding-top:3px;font-weight:600;color:var(--text);opacity:0.8;">סה״כ הוצאות חודשיות מוערכות<span>${fmt(mortgage + propTax + insurance + mgmt + hoaMonthly)}</span></div>`);
+  if (finPct > 0) {
+    lines.push(`<div style="margin-top:6px;font-size:8px;opacity:0.5;color:var(--gold);">עמלת הלוואה (חד-פעמי): $4,500</div>`);
+  }
   if (expEl) expEl.innerHTML = lines.join('');
 }
 
