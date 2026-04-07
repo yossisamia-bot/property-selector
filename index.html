@@ -39,15 +39,15 @@
   }
   .client-badge span { color:var(--gold); font-weight:700; }
 
-  .controls { max-width:1200px; margin:24px auto 0; padding:0 18px; }
+  .controls { max-width:1200px; margin:8px auto 0; padding:0 18px; }
   .ctrl-box {
     background:var(--dark2); border:1px solid var(--border);
-    border-radius:14px; padding:16px 20px;
-    display:flex; flex-wrap:wrap; align-items:center; gap:16px;
+    border-radius:10px; padding:10px 16px;
+    display:flex; flex-wrap:wrap; align-items:center; gap:10px;
   }
   .ctrl-title {
-    font-size:10px; font-weight:700; letter-spacing:1.5px;
-    text-transform:uppercase; color:var(--gold); width:100%;
+    font-size:9px; font-weight:700; letter-spacing:1.2px;
+    text-transform:uppercase; color:var(--gold);
   }
   .fin-input-wrap { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
   .fin-input-label { font-size:13px; color:var(--muted); white-space:nowrap; }
@@ -79,11 +79,11 @@
   .rate-val { color:var(--text); font-weight:700; min-width:44px; }
   .rate-row.hidden { display:none; }
 
-  .intro { text-align:center; padding:24px 18px 10px; }
-  .intro h1 { font-family:'DM Serif Display',serif; font-size:clamp(22px,3.5vw,34px); margin-bottom:8px; }
-  .intro p { color:var(--muted); font-size:14px; max-width:500px; margin:0 auto; line-height:1.7; }
+  .intro { text-align:center; padding:10px 18px 0; }
+  .intro h1 { font-family:'DM Serif Display',serif; font-size:20px; margin-bottom:0; }
+  .intro p { display:none; }
 
-  .neighborhoods { max-width:1200px; margin:0 auto; padding:18px 18px 0; display:flex; flex-direction:column; gap:32px; }
+  .neighborhoods { max-width:1200px; margin:0 auto; padding:10px 18px 0; display:flex; flex-direction:column; gap:20px; }
   .neighborhood {
     background:var(--dark2); border:1px solid var(--border);
     border-radius:18px; overflow:hidden;
@@ -262,7 +262,7 @@
 
   /* MAP */
   .map-wrap {
-    max-width:1200px; margin:18px auto 0; padding:0 18px;
+    max-width:1200px; margin:8px auto 0; padding:0 18px;
     transition:all 0.4s ease;
   }
   .map-container {
@@ -270,7 +270,7 @@
     position:relative;
   }
   #map {
-    height:240px;
+    height:200px;
     transition:height 0.4s ease;
   }
   #map.collapsed { height:0; }
