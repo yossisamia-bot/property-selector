@@ -25,7 +25,6 @@
     color:var(--text); min-height:100vh; direction:rtl; padding-bottom:110px;
   }
 
-  /* HEADER */
   header {
     background:var(--dark2); border-bottom:1px solid var(--border);
     padding:16px 28px; display:flex; align-items:center; justify-content:space-between;
@@ -38,10 +37,7 @@
   }
   .client-badge span { color:var(--gold); font-weight:700; }
 
-  /* GLOBAL FINANCING CONTROLS */
-  .controls {
-    max-width:980px; margin:24px auto 0; padding:0 18px;
-  }
+  .controls { max-width:1100px; margin:24px auto 0; padding:0 18px; }
   .ctrl-box {
     background:var(--dark2); border:1px solid var(--border);
     border-radius:14px; padding:16px 20px;
@@ -49,13 +45,9 @@
   }
   .ctrl-title {
     font-size:10px; font-weight:700; letter-spacing:1.5px;
-    text-transform:uppercase; color:var(--gold); margin-bottom:0;
-    width:100%;
+    text-transform:uppercase; color:var(--gold); width:100%;
   }
-  /* financing input — free field like the old calculator */
-  .fin-input-wrap {
-    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-  }
+  .fin-input-wrap { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
   .fin-input-label { font-size:13px; color:var(--muted); white-space:nowrap; }
   .fin-input-field {
     display:flex; align-items:center; gap:6px;
@@ -77,7 +69,6 @@
     font-size:12px; cursor:pointer; transition:all 0.15s;
   }
   .fin-quick-btn:hover { border-color:var(--gold); color:var(--gold); }
-
   .rate-row {
     display:flex; align-items:center; gap:10px; font-size:13px; color:var(--muted);
     width:100%; padding-top:12px; border-top:1px solid var(--border);
@@ -86,24 +77,17 @@
   .rate-val { color:var(--text); font-weight:700; min-width:44px; }
   .rate-row.hidden { display:none; }
 
-  /* INTRO */
   .intro { text-align:center; padding:24px 18px 10px; }
   .intro h1 { font-family:'DM Serif Display',serif; font-size:clamp(22px,3.5vw,34px); margin-bottom:8px; }
   .intro p { color:var(--muted); font-size:14px; max-width:500px; margin:0 auto; line-height:1.7; }
 
-  /* ── NEIGHBORHOOD SECTIONS ── */
-  .neighborhoods { max-width:980px; margin:0 auto; padding:18px 18px 0; display:flex; flex-direction:column; gap:32px; }
-
+  .neighborhoods { max-width:1100px; margin:0 auto; padding:18px 18px 0; display:flex; flex-direction:column; gap:32px; }
   .neighborhood {
     background:var(--dark2); border:1px solid var(--border);
     border-radius:18px; overflow:hidden;
   }
-
   .nbhd-header {
     padding:16px 22px; border-bottom:1px solid var(--border);
-    display:flex; flex-direction:column; gap:12px;
-  }
-  .nbhd-header-top {
     display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
   }
   .nbhd-title-wrap { display:flex; flex-direction:column; gap:3px; }
@@ -112,6 +96,7 @@
     display:flex; align-items:center; gap:8px;
   }
   .nbhd-sub { font-size:12px; color:var(--muted); }
+  .nbhd-badges { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
   .nbhd-hoa {
     font-size:11px; color:var(--muted);
     background:var(--dark3); border:1px solid var(--border);
@@ -126,41 +111,28 @@
   }
   .map-area-btn:hover { background:var(--blue); color:var(--dark); }
 
-  /* pros/cons strip per neighborhood */
-  .nbhd-pros-cons {
-    display:flex; gap:8px; flex-wrap:wrap;
-  }
-  .nbhd-tag {
-    font-size:11px; padding:4px 11px; border-radius:20px;
-    display:flex; align-items:center; gap:5px; line-height:1.4;
-  }
-  .nbhd-tag.pro {
-    background:rgba(61,214,140,0.09); border:1px solid rgba(61,214,140,0.2); color:#a8f0cd;
-  }
-  .nbhd-tag.con {
-    background:rgba(240,96,96,0.08); border:1px solid rgba(240,96,96,0.18); color:#f5a5a5;
-  }
-
-  /* CARDS WITHIN NEIGHBORHOOD */
   .nbhd-cards {
     display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
     gap:0;
   }
   .nbhd-cards .card { border-radius:0; border:none; border-left:1px solid var(--border); }
   .nbhd-cards .card:first-child { border-left:none; }
-
-  /* On mobile stack vertically */
-  @media (max-width:600px) {
-    .nbhd-cards { grid-template-columns:1fr; }
+  @media (max-width:700px) {
+    .nbhd-cards { grid-template-columns:1fr 1fr; }
     .nbhd-cards .card { border-left:none; border-top:1px solid var(--border); }
+    .nbhd-cards .card:first-child, .nbhd-cards .card:nth-child(2) { border-top:none; }
+    .nbhd-cards .card:nth-child(even) { border-left:1px solid var(--border); }
+  }
+  @media (max-width:460px) {
+    .nbhd-cards { grid-template-columns:1fr; }
+    .nbhd-cards .card { border-left:none !important; border-top:1px solid var(--border); }
     .nbhd-cards .card:first-child { border-top:none; }
   }
 
-  /* CARD */
   .card {
     background:transparent; cursor:pointer;
-    transition:background 0.2s, box-shadow 0.2s;
+    transition:background 0.2s;
     position:relative; display:flex; flex-direction:column;
   }
   .card:hover { background:rgba(201,168,76,0.04); }
@@ -176,35 +148,37 @@
   .card.selected .check-overlay { opacity:1; transform:scale(1); }
   .check-overlay svg { width:12px; height:12px; }
 
-  .card-rec-badge {
-    position:absolute; top:10px; right:10px;
-    background:var(--green); color:var(--dark);
-    font-size:9px; font-weight:900; letter-spacing:1px;
-    padding:3px 9px; border-radius:20px; z-index:2; text-transform:uppercase;
+  /* IMAGE */
+  .card-img {
+    width:100%; height:160px; object-fit:cover; display:block;
+    background:var(--dark3);
+  }
+  .card-img-placeholder {
+    width:100%; height:120px;
+    background:linear-gradient(135deg,var(--dark3),#252a3a);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--muted); font-size:11px; gap:6px;
   }
 
-  /* card body */
-  .card-body { padding:16px; flex:1; display:flex; flex-direction:column; gap:10px; }
-
-  .model-name { font-family:'DM Serif Display',serif; font-size:17px; color:var(--text); }
+  .card-body { padding:14px; flex:1; display:flex; flex-direction:column; gap:8px; }
+  .model-name { font-family:'DM Serif Display',serif; font-size:16px; color:var(--text); }
   .price-range { font-size:13px; font-weight:700; color:var(--gold); }
 
-  /* specs */
-  .specs { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; }
-  .spec { background:var(--dark3); border-radius:7px; padding:7px 3px; text-align:center; }
-  .spec-val { font-size:13px; font-weight:700; color:var(--text); display:block; }
-  .spec-lbl { font-size:9px; color:var(--muted); margin-top:1px; }
+  .specs { display:flex; gap:6px; flex-wrap:wrap; font-size:11px; color:var(--muted); }
+  .spec-tag { background:var(--dark3); border-radius:5px; padding:3px 8px; }
 
-  /* rent input */
-  .rent-row {
+  .cf-row {
     background:var(--dark3); border-radius:9px; padding:10px 12px;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .cf-rent-line {
     display:flex; align-items:center; justify-content:space-between; gap:8px;
   }
-  .rent-row label { font-size:11px; color:var(--muted); white-space:nowrap; flex-shrink:0; }
+  .cf-rent-line label { font-size:11px; color:var(--muted); white-space:nowrap; }
   .rent-input-wrap {
-    display:flex; align-items:center; gap:5px;
+    display:flex; align-items:center; gap:4px;
     background:var(--dark2); border:1px solid var(--border);
-    border-radius:7px; padding:5px 9px; flex:1; max-width:120px;
+    border-radius:7px; padding:4px 8px; max-width:110px;
   }
   .rent-input-wrap span { color:var(--gold); font-weight:700; font-size:13px; }
   .rent-input-wrap input {
@@ -212,111 +186,30 @@
     color:var(--text); font-family:'Heebo',sans-serif;
     font-size:13px; font-weight:700; width:100%; text-align:right; direction:ltr;
   }
-  .rent-input-wrap input::placeholder { color:var(--muted); font-weight:400; font-size:12px; }
-
-  /* cashflow — secondary, not the hero */
-  .cf-section {
-    border-top:1px solid var(--border); padding-top:10px; margin-top:2px;
-    display:flex; flex-direction:column; gap:6px;
-  }
-  .cf-section-title {
-    font-size:9px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase;
-    color:var(--muted); opacity:0.7;
-  }
-  .cf-box {
+  .cf-result {
     display:flex; align-items:center; justify-content:space-between;
+    font-size:12px;
   }
-  .cf-label { font-size:11px; color:var(--muted); }
-  .cf-val { font-size:14px; font-weight:700; transition:color 0.2s; }
-  .cf-val.green { color:var(--green); opacity:0.85; }
-  .cf-val.red   { color:var(--red);   opacity:0.85; }
-  .cf-val.empty { color:var(--muted); font-size:11px; font-weight:400; opacity:0.6; }
+  .cf-result-label { color:var(--muted); }
+  .cf-result-val { font-weight:700; font-size:14px; }
+  .cf-result-val.green { color:var(--green); }
+  .cf-result-val.red { color:var(--red); }
 
-  /* expense breakdown — subtle */
-  .expense-line {
-    font-size:10px; color:var(--muted); opacity:0.65; line-height:1.8;
-  }
-  .expense-line span { color:var(--muted); opacity:0.9; }
+  .expense-line { font-size:9px; color:var(--muted); opacity:0.7; line-height:1.7; }
 
-  /* mortgage breakdown */
-  .mort-breakdown {
-    font-size:10px; color:var(--muted); opacity:0.7; line-height:1.9; display:none;
-  }
-  .mort-breakdown.visible { display:block; }
-  .mort-breakdown b { color:var(--text); opacity:0.8; font-weight:600; }
-
-  /* select button — subtle, small */
   .select-btn {
     width:100%; padding:7px; border-radius:8px; border:1px solid var(--border);
     background:transparent; color:var(--muted); font-family:'Heebo',sans-serif;
     font-size:11px; font-weight:500; cursor:pointer; transition:all 0.17s; margin-top:auto;
-    letter-spacing:0.3px;
   }
   .select-btn:hover { border-color:var(--gold); color:var(--gold); }
   .card.selected .select-btn { background:var(--gold); color:var(--dark); border-color:var(--gold); font-weight:700; }
 
-  /* rec badge — not over text on mobile */
-  .card-rec-badge {
-    display:inline-flex; align-items:center; gap:4px;
-    background:var(--green); color:var(--dark);
-    font-size:9px; font-weight:900; letter-spacing:1px;
-    padding:3px 9px; border-radius:20px; text-transform:uppercase;
-    margin-bottom:4px; align-self:flex-start;
+  .lennar-link {
+    font-size:10px; color:var(--blue); text-decoration:none; text-align:center; display:block; margin-top:4px;
   }
+  .lennar-link:hover { text-decoration:underline; }
 
-  /* ── GALLERY ── */
-  .gallery {
-    display:none; flex-direction:column; gap:0;
-    border-top:1px solid var(--border);
-    animation: fadeIn 0.2s ease;
-  }
-  .gallery.open { display:flex; }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:none} }
-
-  .gallery-scroll {
-    display:flex; overflow-x:auto; gap:0; scroll-snap-type:x mandatory;
-    scrollbar-width:none;
-  }
-  .gallery-scroll::-webkit-scrollbar { display:none; }
-
-  .gallery-img {
-    flex:0 0 100%; scroll-snap-align:start;
-    height:180px; object-fit:cover; display:block; width:100%;
-    background:var(--dark3);
-  }
-  .gallery-img-placeholder {
-    flex:0 0 100%; scroll-snap-align:start; height:180px;
-    background:linear-gradient(135deg,var(--dark3),#252a3a);
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:8px; color:var(--muted); font-size:12px;
-  }
-  .gallery-img-placeholder .big { font-size:36px; }
-
-  .gallery-footer {
-    padding:10px 14px; display:flex; align-items:center; justify-content:space-between;
-    font-size:11px; color:var(--muted); background:var(--dark3);
-  }
-  .gallery-nav { display:flex; gap:6px; }
-  .gallery-nav button {
-    background:var(--dark2); border:1px solid var(--border); color:var(--text);
-    width:28px; height:28px; border-radius:6px; cursor:pointer; font-size:13px;
-    transition:all 0.15s; display:flex; align-items:center; justify-content:center;
-  }
-  .gallery-nav button:hover { border-color:var(--gold); color:var(--gold); }
-  .gallery-counter { font-size:10px; }
-  .gallery-link {
-    font-size:10px; color:var(--blue); text-decoration:none; font-weight:600;
-  }
-  .gallery-link:hover { text-decoration:underline; }
-
-  .gallery-toggle-btn {
-    font-size:10px; color:var(--muted); background:none; border:none;
-    cursor:pointer; font-family:'Heebo',sans-serif; padding:0;
-    display:flex; align-items:center; gap:4px; transition:color 0.15s;
-  }
-  .gallery-toggle-btn:hover { color:var(--gold); }
-
-  /* FOOTER CTA */
   .footer-cta {
     position:fixed; bottom:0; left:0; right:0;
     background:var(--dark2); border-top:1px solid var(--border);
@@ -333,19 +226,25 @@
     font-size:14px; font-weight:700; cursor:pointer; transition:all 0.17s;
   }
   .confirm-btn:hover { background:var(--gold-light); }
+
+  .rec-badge {
+    display:inline-block; background:var(--green); color:var(--dark);
+    font-size:9px; font-weight:900; letter-spacing:0.5px;
+    padding:2px 8px; border-radius:12px; text-transform:uppercase;
+  }
+  .note-tag { font-size:9px; color:var(--muted); opacity:0.6; font-style:italic; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">🏠 US Property Investments</div>
-  <div class="client-badge">שלום <span id="clientName">דויד וסטפני</span> 👋</div>
+  <div class="logo">US Property Investments</div>
+  <div class="client-badge">שלום <span id="clientName">דויד וסטפני</span></div>
 </header>
 
-<!-- FINANCING CONTROLS -->
 <div class="controls">
   <div class="ctrl-box">
-    <div class="ctrl-title">📊 אחוז מימון — לחישוב תזרים חודשי מוערך</div>
+    <div class="ctrl-title">אחוז מימון</div>
     <div class="fin-input-wrap">
       <span class="fin-input-label">מימון:</span>
       <div class="fin-input-field">
@@ -370,24 +269,22 @@
 
 <div class="intro">
   <h1>בחרו שכונה ומודל</h1>
-  <p>3 שכונות, כל אחת עם 2–3 מודלים. הזינו שכירות מוערכת לכל בית — התזרים יחושב בהתאם.</p>
+  <p>שכירות מוערכת ותזרים מחושבים אוטומטית. ניתן לערוך את השכירות ידנית.</p>
 </div>
 
 <div class="neighborhoods" id="nbhdContainer"></div>
 
 <div class="footer-cta" id="footerCta">
   <p>בחרתם: <span id="selectedName">–</span></p>
-  <button class="confirm-btn" onclick="confirmSelection()">✅ אישור — שלחו לי פרטים</button>
+  <button class="confirm-btn" onclick="confirmSelection()">אישור — שלחו לי פרטים</button>
 </div>
 
 <script>
-// ─── STATE ─────────────────────────────────────────────────────────────────
-let finPct     = 0;
+let finPct = 0;
 let annualRate = 0.07;
 let selectedId = null;
-const rentState = {};  // keyed by property id
+const rentState = {};
 
-// ─── DATA (from Price_list.pdf — exact values from Moshe's table) ──────────
 const NEIGHBORHOODS = [
   {
     id: 'sila',
@@ -395,35 +292,49 @@ const NEIGHBORHOODS = [
     city: 'Huffman, TX 77336',
     hoa: 2300,
     mapUrl: 'https://www.google.com/maps/search/Sila+Huffman+TX+77336/@29.9268,-95.0681,14z',
-    pros: ['שכירות גבוהה יחסית למחיר', 'קרוב לשירותים ותשתיות', 'שכונה מבוססת יותר'],
-    cons: ['HOA גבוה ($2,300/שנה)', 'עליית ערך מתונה יחסית', 'תחרות שכירות גבוהה יותר'],
     properties: [
       {
-        id: 'sila-cibola',
-        model: 'Cibola',
-        sqft: 1535, beds: 4, baths: 3, garage: 1, floors: 2,
-        priceMin: 160000, priceMax: 170000,
-        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/cibola/22635833216',
-        recommended: false,
-        images: [
-          'https://images1.apartments.com/i2/aN7p3IKC6ZpGV8Y1smgwm4iWmPJOmxPPrsBiqpEzFJE/117/image.jpg',
-        ],
-      },
-      {
-        id: 'sila-ramsey',
-        model: 'Ramsey',
+        id: 'sila-ramsey', model: 'Ramsey',
         sqft: 1720, beds: 4, baths: 2, garage: 2, floors: 1,
         priceMin: 180000, priceMax: 200000,
+        estRent: 1800, compRent: 1650,
         lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/ramsey/22637892524',
         recommended: true,
         images: [],
       },
       {
-        id: 'sila-newlin',
-        model: 'Newlin',
+        id: 'sila-newlin', model: 'Newlin',
         sqft: 1522, beds: 3, baths: 2, garage: 2, floors: 1,
         priceMin: 170000, priceMax: 190000,
+        estRent: 1750, compRent: 1500,
         lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/newlin/22637892705',
+        recommended: false,
+        images: [],
+      },
+      {
+        id: 'sila-cibola', model: 'Cibola',
+        sqft: 1535, beds: 4, baths: 3, garage: 1, floors: 2,
+        priceMin: 160000, priceMax: 170000,
+        estRent: 1725, compRent: 1600,
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/cibola/22635833216',
+        recommended: false,
+        images: [],
+      },
+      {
+        id: 'sila-pima', model: 'Pima',
+        sqft: 1360, beds: 3, baths: 3, garage: 1, floors: 2,
+        priceMin: 150000, priceMax: 160000,
+        estRent: 1650, compRent: 1400,
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/pima/22635833215',
+        recommended: false,
+        images: [],
+      },
+      {
+        id: 'sila-beckman', model: 'Beckman',
+        sqft: 1302, beds: 3, baths: 2, garage: 2, floors: 1,
+        priceMin: 160000, priceMax: 180000,
+        estRent: 1700, compRent: 1450,
+        lennarUrl: 'https://www.zillow.com/homedetails/31504-Olivella-Dr-Huffman-TX-77336/461266715_zpid/',
         recommended: false,
         images: [],
       },
@@ -435,35 +346,35 @@ const NEIGHBORHOODS = [
     city: 'Crosby, TX 77532',
     hoa: 756,
     mapUrl: 'https://www.google.com/maps/search/Indian+Springs+Crosby+TX+77532/@29.9085,-95.0078,14z',
-    pros: ['HOA נמוך מאוד ($756/שנה)', 'מחיר כניסה נמוך יותר', 'פוטנציאל עליית ערך גבוה יותר'],
-    cons: ['שכירות נמוכה יחסית', 'שכונה פחות מבוססת', 'תשתיות בפיתוח'],
     properties: [
       {
-        id: 'is-cibola',
-        model: 'Cibola',
-        sqft: 1535, beds: 4, baths: 3, garage: 1, floors: 2,
-        priceMin: 170000, priceMax: 190000,
-        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/cibola/22635833216',
-        recommended: false,
-        images: [],
-      },
-      {
-        id: 'is-pima',
-        model: 'Pima',
-        sqft: 1360, beds: 3, baths: 3, garage: 1, floors: 2,
-        priceMin: 160000, priceMax: 170000,
-        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/pima/22635833215',
-        recommended: false,
-        images: [],
-      },
-      {
-        id: 'is-kitson',
-        model: 'Kitson',
+        id: 'is-kitson', model: 'Kitson',
         sqft: 1409, beds: 3, baths: 2, garage: 2, floors: 1,
         priceMin: 190000, priceMax: 210000,
+        estRent: 1850, compRent: 1600,
         lennarUrl: 'https://investor-marketplace.lennar.com/portal/properties/750658/images',
         recommended: true,
         images: [],
+      },
+      {
+        id: 'is-cibola', model: 'Cibola',
+        sqft: 1535, beds: 4, baths: 3, garage: 1, floors: 2,
+        priceMin: 170000, priceMax: 190000,
+        estRent: 1600, compRent: null,
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/cibola/22635833216',
+        recommended: false,
+        images: [],
+        note: 'אין comps למודל זה באזור',
+      },
+      {
+        id: 'is-pima', model: 'Pima',
+        sqft: 1360, beds: 3, baths: 3, garage: 1, floors: 2,
+        priceMin: 160000, priceMax: 170000,
+        estRent: 1550, compRent: null,
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/pima/22635833215',
+        recommended: false,
+        images: [],
+        note: 'אין comps למודל זה באזור',
       },
     ]
   },
@@ -473,32 +384,40 @@ const NEIGHBORHOODS = [
     city: 'Crosby, TX 77532',
     hoa: 2300,
     mapUrl: 'https://www.google.com/maps/search/Synova+Crosby+TX+77532/@29.9085,-95.0078,14z',
-    pros: ['בתים קומה אחת — תחזוקה נמוכה', 'ביקוש גבוה מדיירים יציבים', 'שכונה חדשה ואיכותית'],
-    cons: ['HOA גבוה ($2,300/שנה)', 'מחיר קנייה גבוה יחסית', 'צביעה ותחזוקה יקרים יותר (מטראז גדול)'],
     properties: [
       {
-        id: 'syn-pinehollow',
-        model: 'Pinehollow',
+        id: 'syn-pinehollow', model: 'Pinehollow',
         sqft: 1656, beds: 4, baths: 2, garage: 2, floors: 1,
         priceMin: 190000, priceMax: 210000,
+        estRent: 2000, compRent: null,
         lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/pinehollow/22615845148',
         recommended: true,
         images: [],
       },
       {
-        id: 'syn-kitson',
-        model: 'Kitson',
+        id: 'syn-kitson', model: 'Kitson',
         sqft: 1409, beds: 3, baths: 2, garage: 2, floors: 1,
         priceMin: 190000, priceMax: 210000,
+        estRent: 1850, compRent: null,
         lennarUrl: 'https://investor-marketplace.lennar.com/portal/properties/750658/images',
         recommended: false,
         images: [],
       },
       {
-        id: 'syn-beckman',
-        model: 'Beckman',
+        id: 'syn-whitetail', model: 'Whitetail',
+        sqft: 2039, beds: 4, baths: 3, garage: 2, floors: 1,
+        priceMin: 210000, priceMax: 230000,
+        estRent: null, compRent: 1900,
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/whitetail/22615845149',
+        recommended: false,
+        images: [],
+        note: 'אין הערכת שכירות — comp בלבד',
+      },
+      {
+        id: 'syn-beckman', model: 'Beckman',
         sqft: 1302, beds: 3, baths: 2, garage: 2, floors: 1,
         priceMin: 175000, priceMax: 195000,
+        estRent: 1750, compRent: null,
         lennarUrl: 'https://www.zillow.com/homedetails/1523-Gardenia-Grove-Ln-Crosby-TX-77532/460667246_zpid/',
         recommended: false,
         images: [],
@@ -507,64 +426,36 @@ const NEIGHBORHOODS = [
   }
 ];
 
-// ─── GALLERY STATE ─────────────────────────────────────────────────────────
-const galleryIndex = {}; // propId → current image index
-
-function toggleGallery(propId, event) {
-  event.stopPropagation();
-  const el = document.getElementById(`gallery-${propId}`);
-  el.classList.toggle('open');
-}
-
-function galleryNav(propId, dir, event) {
-  event.stopPropagation();
-  const prop = ALL_PROPS.find(p => p.id === propId);
-  const total = prop.images.length;
-  galleryIndex[propId] = ((galleryIndex[propId] || 0) + dir + total) % total;
-  const scroll = document.getElementById(`gscroll-${propId}`);
-  scroll.scrollTo({ left: galleryIndex[propId] * scroll.offsetWidth, behavior:'smooth' });
-  document.getElementById(`gcounter-${propId}`).textContent =
-    `${galleryIndex[propId]+1} / ${total}`;
-}
-
-// Flatten for easy lookup
 const ALL_PROPS = NEIGHBORHOODS.flatMap(n =>
   n.properties.map(p => ({ ...p, neighborhood: n }))
 );
 
-// ─── MORTGAGE CALC ────────────────────────────────────────────────────────
-// P+I מהיום הראשון — 30 שנה. ככל שיותר שנים משלמים, המשכנתא נעלמת
+// Auto-fill rent from estimates
+ALL_PROPS.forEach(p => {
+  rentState[p.id] = p.estRent ?? p.compRent ?? null;
+});
+
 function monthlyMortgage(principal, rate) {
   if (principal <= 0 || rate <= 0) return 0;
   const r = rate / 12, n = 30 * 12;
   return principal * (r * Math.pow(1+r,n)) / (Math.pow(1+r,n) - 1);
 }
 
-// תזרים חודשי ריאלי — רק הוצאות קבועות ובאות לידי ביטוי כל חודש
-// vacancy ותחזוקה לא נכלל — אלו ממוצעים לאורך זמן, לא הוצאה חודשית
 function calcCashflow(priceVal, rent, finPct, annualRate, hoaAnnual) {
-  const loan       = priceVal * finPct;
-  const equity     = priceVal - loan;
-  const mortgage   = monthlyMortgage(loan, annualRate);          // I.O
-  const propTax    = (priceVal * 0.032) / 12;                   // TX 3.2%/שנה
-  const insurance  = 1150 / 12;                                  // $1,150/שנה קבוע
-  const mgmt       = rent * 0.08;                                // 8% ניהול מהשכירות
+  const loan = priceVal * finPct;
+  const mortgage = monthlyMortgage(loan, annualRate);
+  const propTax = (priceVal * 0.032) / 12;
+  const insurance = 1150 / 12;
+  const mgmt = rent * 0.08;
   const hoaMonthly = hoaAnnual / 12;
-  const totalExp   = mortgage + propTax + insurance + mgmt + hoaMonthly;
-  const cashflow   = rent - totalExp;
-  return { loan, equity, mortgage, propTax, insurance, mgmt, hoaMonthly, totalExp, cashflow };
+  const totalExp = mortgage + propTax + insurance + mgmt + hoaMonthly;
+  return { loan, equity: priceVal - loan, mortgage, propTax, insurance, mgmt, hoaMonthly, totalExp, cashflow: rent - totalExp };
 }
 
 function priceDisplay(p) { return (p.priceMin + p.priceMax) / 2; }
-function fmt(n) {
-  const v = Math.round(Math.abs(n));
-  return (n < 0 ? '-' : '') + '$' + v.toLocaleString('en-US');
-}
-function fmtRange(p) {
-  return '$' + (p.priceMin/1000).toFixed(0) + 'K – $' + (p.priceMax/1000).toFixed(0) + 'K';
-}
+function fmt(n) { return (n < 0 ? '-' : '') + '$' + Math.round(Math.abs(n)).toLocaleString('en-US'); }
+function fmtRange(p) { return '$' + (p.priceMin/1000).toFixed(0) + 'K–$' + (p.priceMax/1000).toFixed(0) + 'K'; }
 
-// ─── CONTROLS ─────────────────────────────────────────────────────────────
 function onFinInput(val) {
   const pct = Math.min(90, Math.max(0, parseFloat(val) || 0));
   finPct = pct / 100;
@@ -575,7 +466,6 @@ function setFinTo(pct) {
   document.getElementById('finInput').value = pct;
   onFinInput(pct);
 }
-
 function setRate(val) {
   annualRate = parseFloat(val) / 100;
   document.getElementById('rateLabel').textContent = parseFloat(val).toFixed(2) + '%';
@@ -585,51 +475,39 @@ function setRate(val) {
 function onRentInput(id, val) {
   const num = val.trim() === '' ? null : parseFloat(val.replace(/[^0-9.]/g, ''));
   rentState[id] = (num === null || isNaN(num)) ? null : num;
-  const prop = ALL_PROPS.find(p => p.id === id);
-  updateCard(prop);
+  updateCard(ALL_PROPS.find(p => p.id === id));
 }
 
 function updateCard(p) {
-  const rent  = rentState[p.id] ?? null;
-  const cfEl  = document.getElementById(`cf-${p.id}`);
-  const mortEl= document.getElementById(`mort-${p.id}`);
+  const rent = rentState[p.id] ?? null;
+  const cfEl = document.getElementById(`cf-${p.id}`);
   const expEl = document.getElementById(`exp-${p.id}`);
+  if (!cfEl) return;
 
   if (rent === null || rent <= 0) {
     cfEl.textContent = '—';
-    cfEl.className   = 'cf-val empty';
-    mortEl.classList.remove('visible');
+    cfEl.className = 'cf-result-val';
     if (expEl) expEl.innerHTML = '';
     return;
   }
 
-  const pd  = priceDisplay(p);
+  const pd = priceDisplay(p);
   const hoa = p.neighborhood.hoa;
-  const { loan, equity, mortgage, propTax, insurance, mgmt, hoaMonthly, cashflow } =
+  const { mortgage, propTax, insurance, mgmt, hoaMonthly, cashflow } =
     calcCashflow(pd, rent, finPct, annualRate, hoa);
 
-  cfEl.textContent = (cashflow >= 0 ? '+' : '') + fmt(cashflow) + '/חודש';
-  cfEl.className   = 'cf-val ' + (cashflow >= 0 ? 'green' : 'red');
+  cfEl.textContent = (cashflow >= 0 ? '+' : '') + fmt(cashflow);
+  cfEl.className = 'cf-result-val ' + (cashflow >= 0 ? 'green' : 'red');
 
-  // פירוט הוצאות
   const parts = [];
-  if (finPct > 0) parts.push(`משכנתא (P+I) ${fmt(mortgage)}`);
-  parts.push(`מס רכוש ${fmt(propTax)}`);
+  if (finPct > 0) parts.push(`P+I ${fmt(mortgage)}`);
+  parts.push(`מס ${fmt(propTax)}`);
   parts.push(`ביטוח ${fmt(insurance)}`);
-  parts.push(`ניהול 8% ${fmt(mgmt)}`);
+  parts.push(`ניהול ${fmt(mgmt)}`);
   parts.push(`HOA ${fmt(hoaMonthly)}`);
   if (expEl) expEl.innerHTML = parts.join(' · ');
-
-  // הלוואה + הון עצמי
-  if (finPct > 0) {
-    mortEl.classList.add('visible');
-    mortEl.innerHTML = `הלוואה <b>${fmt(loan)}</b> · הון עצמי <b>${fmt(equity)}</b>`;
-  } else {
-    mortEl.classList.remove('visible');
-  }
 }
 
-// ─── SELECT ────────────────────────────────────────────────────────────────
 function selectCard(propId) {
   selectedId = propId;
   document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
@@ -649,58 +527,47 @@ function confirmSelection() {
     cfLine = `\nתזרים מוערך: ${cashflow >= 0 ? '+' : ''}${fmt(cashflow)}/חודש`;
   }
   alert(
-    `תודה!\n\n` +
     `שכונה: ${prop.neighborhood.name}\n` +
     `מודל: ${prop.model}\n` +
     `עיר: ${prop.neighborhood.city}\n` +
     `מחיר: ${fmtRange(prop)}` +
     cfLine +
-    `\n\nנשלח אליכם את הפרטים המלאים לאישור סופי 🏠`
+    `\n\nנשלח פרטים מלאים לאישור סופי`
   );
 }
 
-// ─── RENDER ────────────────────────────────────────────────────────────────
 function renderAll() {
   const container = document.getElementById('nbhdContainer');
   container.innerHTML = NEIGHBORHOODS.map(n => `
     <div class="neighborhood">
       <div class="nbhd-header">
-        <div class="nbhd-header-top">
-          <div class="nbhd-title-wrap">
-            <div class="nbhd-name">🏘️ ${n.name}</div>
-            <div class="nbhd-sub">${n.city}</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-            <div class="nbhd-hoa">HOA: <span>$${n.hoa.toLocaleString()}/שנה</span></div>
-            <a class="map-area-btn" href="${n.mapUrl}" target="_blank">📍 מפת האזור</a>
-          </div>
+        <div class="nbhd-title-wrap">
+          <div class="nbhd-name">${n.name}</div>
+          <div class="nbhd-sub">${n.city} · ${n.properties.length} מודלים</div>
         </div>
-        <div class="nbhd-pros-cons">
-          ${n.pros.map(t => `<div class="nbhd-tag pro">✓ ${t}</div>`).join('')}
-          ${n.cons.map(t => `<div class="nbhd-tag con">✗ ${t}</div>`).join('')}
+        <div class="nbhd-badges">
+          <div class="nbhd-hoa">HOA: <span>$${n.hoa.toLocaleString()}/שנה</span></div>
+          <a class="map-area-btn" href="${n.mapUrl}" target="_blank">מפה</a>
         </div>
       </div>
       <div class="nbhd-cards">
-        ${n.properties.map(p => renderCard(p)).join('')}
+        ${n.properties.map(p => renderCard(p, n)).join('')}
       </div>
     </div>
   `).join('');
+
+  ALL_PROPS.forEach(p => updateCard(p));
 }
 
-function renderCard(p) {
-  const floorsLabel = p.floors === 1 ? 'קומה אחת' : '2 קומות';
-  const hasImages   = p.images && p.images.length > 0;
-  const total       = hasImages ? p.images.length : 0;
-  galleryIndex[p.id] = 0;
+function renderCard(p, n) {
+  const floorsLabel = p.floors === 1 ? 'קומה 1' : '2 קומות';
+  const initRent = rentState[p.id] ?? '';
+  const compLine = p.compRent ? `comp: $${p.compRent.toLocaleString()}` : '';
 
-  const galleryContent = hasImages
-    ? p.images.map(src =>
-        `<img class="gallery-img" src="${src}" loading="lazy" onerror="this.style.display='none'" />`
-      ).join('')
-    : `<div class="gallery-img-placeholder">
-         <span class="big">🏠</span>
-         <span>תמונות יתווספו בקרוב</span>
-       </div>`;
+  const hasImages = p.images && p.images.length > 0;
+  const imgHtml = hasImages
+    ? `<img class="card-img" src="${p.images[0]}" loading="lazy" onerror="this.outerHTML='<div class=card-img-placeholder>תמונה לא זמינה</div>'" />`
+    : `<div class="card-img-placeholder">תמונות בקרוב</div>`;
 
   return `
     <div class="card" id="card-${p.id}" onclick="selectCard('${p.id}')">
@@ -710,67 +577,40 @@ function renderCard(p) {
           <polyline points="20 6 9 17 4 12"/>
         </svg>
       </div>
-
-      <!-- GALLERY (hidden by default) -->
-      <div class="gallery" id="gallery-${p.id}">
-        <div class="gallery-scroll" id="gscroll-${p.id}">
-          ${galleryContent}
-        </div>
-        <div class="gallery-footer">
-          <a class="gallery-link" href="${p.lennarUrl}" target="_blank" onclick="event.stopPropagation()">
-            פתח בלנאר ↗
-          </a>
-          <span class="gallery-counter" id="gcounter-${p.id}">1 / ${Math.max(total,1)}</span>
-          <div class="gallery-nav">
-            <button onclick="galleryNav('${p.id}',-1,event)">‹</button>
-            <button onclick="galleryNav('${p.id}',1,event)">›</button>
-          </div>
-        </div>
-      </div>
-
+      ${imgHtml}
       <div class="card-body">
         <div>
-          ${p.recommended ? `<div class="card-rec-badge">⭐ מומלץ</div>` : ''}
+          ${p.recommended ? '<span class="rec-badge">מומלץ</span>' : ''}
           <div class="model-name">${p.model}</div>
           <div class="price-range">${fmtRange(p)}</div>
         </div>
-
         <div class="specs">
-          <div class="spec"><span class="spec-val">${p.beds}</span><div class="spec-lbl">חדרים</div></div>
-          <div class="spec"><span class="spec-val">${p.baths}</span><div class="spec-lbl">שירותים</div></div>
-          <div class="spec"><span class="spec-val">${p.sqft.toLocaleString()}</span><div class="spec-lbl">Sq Ft</div></div>
-          <div class="spec"><span class="spec-val">${p.garage}</span><div class="spec-lbl">גראז׳</div></div>
+          <span class="spec-tag">${p.beds} חד׳</span>
+          <span class="spec-tag">${p.baths} שירותים</span>
+          <span class="spec-tag">${p.sqft.toLocaleString()} sqft</span>
+          <span class="spec-tag">${p.garage} גראז׳</span>
+          <span class="spec-tag">${floorsLabel}</span>
         </div>
-        <div style="font-size:10px;color:var(--muted);opacity:0.65;margin-top:-4px;">
-          ${floorsLabel} · ${p.floors === 1 ? 'גג שטוח, חצר' : 'גג משופע, 2 קומות'}
-        </div>
+        ${p.note ? `<div class="note-tag">${p.note}</div>` : ''}
 
-        <div class="rent-row" onclick="event.stopPropagation()">
-          <label>שכירות / חודש</label>
-          <div class="rent-input-wrap">
-            <span>$</span>
-            <input type="number" id="rent-input-${p.id}"
-                   placeholder="הזינו" min="0"
-                   oninput="onRentInput('${p.id}', this.value)" />
+        <div class="cf-row" onclick="event.stopPropagation()">
+          <div class="cf-rent-line">
+            <label>שכירות${compLine ? ' <span style="opacity:0.5;font-size:9px">(' + compLine + ')</span>' : ''}</label>
+            <div class="rent-input-wrap">
+              <span>$</span>
+              <input type="number" value="${initRent}" min="0"
+                     oninput="onRentInput('${p.id}', this.value)" />
+            </div>
           </div>
-        </div>
-
-        <div class="cf-section">
-          <div class="cf-section-title">תזרים חודשי מוערך</div>
-          <div class="cf-box">
-            <div class="cf-label">שכירות פחות הוצאות</div>
-            <div class="cf-val empty" id="cf-${p.id}">—</div>
+          <div class="cf-result">
+            <span class="cf-result-label">תזרים חודשי</span>
+            <span class="cf-result-val" id="cf-${p.id}">—</span>
           </div>
           <div class="expense-line" id="exp-${p.id}"></div>
-          <div class="mort-breakdown" id="mort-${p.id}"></div>
         </div>
 
-        <div style="display:flex;gap:8px;align-items:center;margin-top:auto;">
-          <button class="select-btn" style="flex:1;">בחר מודל זה</button>
-          <button class="gallery-toggle-btn" onclick="toggleGallery('${p.id}',event)">
-            📷 תמונות
-          </button>
-        </div>
+        <button class="select-btn">בחר מודל זה</button>
+        <a class="lennar-link" href="${p.lennarUrl}" target="_blank" onclick="event.stopPropagation()">צפה בלנאר</a>
       </div>
     </div>
   `;
