@@ -405,7 +405,7 @@ const NEIGHBORHOODS = [
     name: 'Sila',
     cityHe: 'האפמן', cityEn: 'Huffman',
     hoa: 2300,
-    mapUrl: 'https://www.google.com/maps/search/Sila+Huffman+TX+77336/@29.9268,-95.0681,14z',
+    mapUrl: 'https://www.google.com/maps/@29.9268,-95.0681,16z/data=!3m1!1e3',
     properties: [
       {
         id: 'sila-ramsey', model: 'Ramsey',
@@ -474,7 +474,7 @@ const NEIGHBORHOODS = [
     name: 'Indian Springs',
     cityHe: 'קרוסבי', cityEn: 'Crosby',
     hoa: 756,
-    mapUrl: 'https://www.google.com/maps/search/Indian+Springs+Crosby+TX+77532/@29.9085,-95.0078,14z',
+    mapUrl: 'https://www.google.com/maps/@29.9713,-95.113,16z/data=!3m1!1e3',
     properties: [
       {
         id: 'is-kitson', model: 'Kitson',
@@ -521,7 +521,7 @@ const NEIGHBORHOODS = [
     name: 'Synova',
     cityHe: 'קרוסבי', cityEn: 'Crosby',
     hoa: 2300,
-    mapUrl: 'https://www.google.com/maps/search/Synova+Crosby+TX+77532/@29.9085,-95.0078,14z',
+    mapUrl: 'https://www.google.com/maps/@29.94,-95.09,16z/data=!3m1!1e3',
     properties: [
       {
         id: 'syn-pinehollow', model: 'Pinehollow',
@@ -662,7 +662,7 @@ function updateCard(p) {
   lines.push(`<div>ביטוח<span>${fmt(insurance)}</span></div>`);
   lines.push(`<div>ניהול 8%<span>${fmt(mgmt)}</span></div>`);
   lines.push(`<div>HOA<span>${fmt(hoaMonthly)}</span></div>`);
-  lines.push(`<div style="border-top:1px solid var(--border);margin-top:3px;padding-top:3px;font-weight:600;color:var(--text);opacity:0.8;">סה״כ הוצאות<span>${fmt(mortgage + propTax + insurance + mgmt + hoaMonthly)}</span></div>`);
+  lines.push(`<div style="border-top:1px solid var(--border);margin-top:3px;padding-top:3px;font-weight:600;color:var(--text);opacity:0.8;">סה״כ הוצאות מוערכות<span>${fmt(mortgage + propTax + insurance + mgmt + hoaMonthly)}</span></div>`);
   if (expEl) expEl.innerHTML = lines.join('');
 }
 
@@ -705,7 +705,7 @@ function renderAll() {
         </div>
         <div class="nbhd-badges">
           <div class="nbhd-hoa">HOA: <span>$${n.hoa.toLocaleString()}/שנה</span></div>
-          <a class="map-area-btn" href="${n.mapUrl}" target="_blank">מפה</a>
+          <a class="map-area-btn" href="${n.mapUrl}" target="_blank">צילום אוויר</a>
         </div>
       </div>
       <div class="nbhd-cards">
@@ -753,7 +753,7 @@ function renderCard(p, n) {
 
         <div class="cf-row" onclick="event.stopPropagation()">
           <div class="cf-rent-line">
-            <label>שכירות${compLine ? ' <span style="opacity:0.5;font-size:9px">(' + compLine + ')</span>' : ''}</label>
+            <label>שכירות מוערכת${compLine ? ' <span style="opacity:0.5;font-size:9px">(' + compLine + ')</span>' : ''}</label>
             <div class="rent-input-wrap">
               <span>$</span>
               <input type="number" value="${initRent}" min="0"
@@ -766,7 +766,7 @@ function renderCard(p, n) {
           </button>
           <div class="expense-detail" id="exp-${p.id}"></div>
           <div class="cf-result">
-            <span class="cf-result-label">תזרים חודשי</span>
+            <span class="cf-result-label">תזרים חודשי מוערך</span>
             <span class="cf-result-val" id="cf-${p.id}">—</span>
           </div>
         </div>
