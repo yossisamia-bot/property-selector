@@ -124,15 +124,22 @@
   .nbhd-cards .card { border-radius:0; border:none; border-left:1px solid var(--border); }
   .nbhd-cards .card:first-child { border-left:none; }
   @media (max-width:700px) {
-    .nbhd-cards { grid-template-columns:1fr 1fr; }
-    .nbhd-cards .card { border-left:none; border-top:1px solid var(--border); }
+    .nbhd-cards .card { flex:1 1 45%; min-width:45%; border-left:none; border-top:1px solid var(--border); }
     .nbhd-cards .card:first-child, .nbhd-cards .card:nth-child(2) { border-top:none; }
-    .nbhd-cards .card:nth-child(even) { border-left:1px solid var(--border); }
+    #map { height:160px; }
+    header { padding:10px 16px; }
+    .logo { font-size:16px; }
+    .client-badge { font-size:11px; padding:4px 12px; }
+    .ctrl-box { padding:8px 12px; gap:8px; }
+    .nbhd-header { padding:12px 14px; }
   }
   @media (max-width:460px) {
-    .nbhd-cards { grid-template-columns:1fr; }
-    .nbhd-cards .card { border-left:none !important; border-top:1px solid var(--border); }
+    .nbhd-cards .card { flex:1 1 100%; min-width:100%; border-left:none !important; border-top:1px solid var(--border); }
     .nbhd-cards .card:first-child { border-top:none; }
+    #map { height:140px; }
+    .intro h1 { font-size:17px; }
+    .card-img, .card-img-placeholder { height:140px; }
+    .fin-quick-btn { padding:4px 8px; font-size:11px; }
   }
 
   .card {
