@@ -112,9 +112,12 @@
   .map-area-btn:hover { background:var(--blue); color:var(--dark); }
 
   .nbhd-cards {
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(190px, 1fr));
-    gap:0;
+    display:flex;
+    flex-wrap:wrap;
+  }
+  .nbhd-cards .card {
+    flex:1 1 180px;
+    min-width:180px;
   }
   .nbhd-cards .card { border-radius:0; border:none; border-left:1px solid var(--border); }
   .nbhd-cards .card:first-child { border-left:none; }
