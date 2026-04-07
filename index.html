@@ -404,7 +404,7 @@ const NEIGHBORHOODS = [
     id: 'sila',
     name: 'Sila',
     cityHe: 'האפמן', cityEn: 'Huffman',
-    hoa: 2300,
+    hoa: 1500,
     mapUrl: 'https://www.google.com/maps/@29.9268,-95.0681,16z/data=!3m1!1e3',
     properties: [
       {
@@ -473,7 +473,7 @@ const NEIGHBORHOODS = [
     id: 'indian-springs',
     name: 'Indian Springs',
     cityHe: 'קרוסבי', cityEn: 'Crosby',
-    hoa: 756,
+    hoa: 1500,
     mapUrl: 'https://www.google.com/maps/@29.9713,-95.113,16z/data=!3m1!1e3',
     properties: [
       {
@@ -520,7 +520,7 @@ const NEIGHBORHOODS = [
     id: 'synova',
     name: 'Synova',
     cityHe: 'קרוסבי', cityEn: 'Crosby',
-    hoa: 2300,
+    hoa: 1500,
     mapUrl: 'https://www.google.com/maps/@29.94,-95.09,16z/data=!3m1!1e3',
     properties: [
       {
@@ -595,7 +595,7 @@ function calcCashflow(priceVal, rent, finPct, annualRate, hoaAnnual) {
   const loan = priceVal * finPct;
   const mortgage = monthlyMortgage(loan, annualRate);
   const propTax = (priceVal * 0.032) / 12;
-  const insurance = 1150 / 12;
+  const insurance = 4500 / 12;
   const mgmt = rent * 0.08;
   const hoaMonthly = hoaAnnual / 12;
   const totalExp = mortgage + propTax + insurance + mgmt + hoaMonthly;
