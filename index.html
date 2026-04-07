@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>בחירת בית להשקעה</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
   :root {
     --gold: #C9A84C;
@@ -236,6 +238,59 @@
     padding:2px 8px; border-radius:12px; text-transform:uppercase;
   }
   .note-tag { font-size:9px; color:var(--muted); opacity:0.6; font-style:italic; }
+
+  /* MAP */
+  .map-wrap {
+    max-width:1200px; margin:18px auto 0; padding:0 18px;
+    transition:all 0.4s ease;
+  }
+  .map-container {
+    border-radius:14px; overflow:hidden; border:1px solid var(--border);
+    position:relative;
+  }
+  #map {
+    height:240px;
+    transition:height 0.4s ease;
+  }
+  #map.collapsed { height:0; }
+  .map-strip {
+    display:none;
+    background:var(--dark2); border:1px solid var(--border);
+    border-radius:10px; padding:8px 16px;
+    align-items:center; justify-content:space-between;
+    max-width:1200px; margin:18px auto 0; padding-left:18px; padding-right:18px;
+  }
+  .map-strip.visible { display:flex; }
+  .map-strip-info {
+    font-size:13px; color:var(--text);
+    display:flex; align-items:center; gap:8px;
+  }
+  .map-strip-info .dot {
+    width:10px; height:10px; border-radius:50%; background:var(--gold);
+  }
+  .map-strip-btn {
+    font-size:11px; color:var(--blue); background:none; border:1px solid rgba(91,156,246,0.2);
+    border-radius:6px; padding:4px 12px; cursor:pointer; font-family:'Heebo',sans-serif;
+    transition:all 0.15s;
+  }
+  .map-strip-btn:hover { background:var(--blue); color:var(--dark); }
+
+  /* Leaflet popup override */
+  .leaflet-popup-content-wrapper {
+    background:var(--dark2) !important;
+    color:var(--text) !important;
+    border:1px solid var(--border) !important;
+    border-radius:10px !important;
+    font-family:'Heebo',sans-serif !important;
+  }
+  .leaflet-popup-tip { background:var(--dark2) !important; }
+  .leaflet-popup-content { font-size:13px !important; }
+  .nbhd-popup-btn {
+    display:block; margin-top:6px; padding:5px 12px;
+    background:var(--gold); color:var(--dark); border:none; border-radius:6px;
+    font-family:'Heebo',sans-serif; font-size:12px; font-weight:700;
+    cursor:pointer; width:100%; text-align:center;
+  }
 </style>
 </head>
 <body>
@@ -244,6 +299,20 @@
   <div class="logo">US Property Investments</div>
   <div class="client-badge">שלום <span id="clientName">דויד וסטפני</span></div>
 </header>
+
+<!-- MAP -->
+<div class="map-wrap" id="mapWrap">
+  <div class="map-container">
+    <div id="map"></div>
+  </div>
+</div>
+<div class="map-strip" id="mapStrip">
+  <div class="map-strip-info">
+    <span class="dot"></span>
+    <span id="stripName">—</span>
+  </div>
+  <button class="map-strip-btn" onclick="expandMap()">חזרה למפה</button>
+</div>
 
 <div class="controls">
   <div class="ctrl-box">
@@ -578,7 +647,7 @@ function confirmSelection() {
 function renderAll() {
   const container = document.getElementById('nbhdContainer');
   container.innerHTML = NEIGHBORHOODS.map(n => `
-    <div class="neighborhood">
+    <div class="neighborhood" id="nbhd-${n.id}">
       <div class="nbhd-header">
         <div class="nbhd-title-wrap">
           <div class="nbhd-name">${n.name}</div>
@@ -656,6 +725,84 @@ function renderCard(p, n) {
 }
 
 renderAll();
+
+// ─── MAP ─────────────────────────────────────────────────────────────────
+const MAP_COORDS = {
+  'sila':           { lat: 29.9268, lng: -95.0681, label: 'Sila · האפמן' },
+  'indian-springs': { lat: 29.9713, lng: -95.1130, label: 'Indian Springs · קרוסבי' },
+  'synova':         { lat: 29.9400, lng: -95.0900, label: 'Synova · קרוסבי' },
+};
+const HOUSTON_CENTER = [29.94, -95.09];
+
+const map = L.map('map', {
+  zoomControl: false,
+  attributionControl: false,
+  scrollWheelZoom: false,
+  dragging: true,
+}).setView(HOUSTON_CENTER, 12);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  maxZoom: 16,
+}).addTo(map);
+
+// Houston reference — small subtle label
+L.marker([29.7604, -95.3698], {
+  icon: L.divIcon({
+    className: '',
+    html: '<div style="color:#7A8099;font-size:10px;font-family:Heebo;white-space:nowrap;opacity:0.6;">Houston Downtown ←</div>',
+    iconSize: [100, 20],
+    iconAnchor: [100, 10],
+  })
+}).addTo(map);
+
+// Neighborhood markers
+const goldIcon = (label) => L.divIcon({
+  className: '',
+  html: `<div style="
+    background:rgba(201,168,76,0.9);color:#0F1117;
+    font-family:Heebo,sans-serif;font-size:12px;font-weight:700;
+    padding:5px 12px;border-radius:20px;white-space:nowrap;
+    box-shadow:0 2px 8px rgba(0,0,0,0.4);
+    cursor:pointer;text-align:center;
+  ">${label}</div>`,
+  iconSize: [0, 0],
+  iconAnchor: [60, 15],
+});
+
+Object.entries(MAP_COORDS).forEach(([id, info]) => {
+  const marker = L.marker([info.lat, info.lng], { icon: goldIcon(info.label) }).addTo(map);
+  marker.on('click', () => selectNeighborhood(id, info.label));
+});
+
+let mapExpanded = true;
+
+function selectNeighborhood(id, label) {
+  // Collapse map
+  document.getElementById('map').classList.add('collapsed');
+  document.getElementById('mapWrap').style.marginTop = '0';
+  document.getElementById('mapWrap').style.padding = '0';
+  document.getElementById('mapStrip').classList.add('visible');
+  document.getElementById('stripName').textContent = label;
+  mapExpanded = false;
+
+  // Scroll to neighborhood
+  setTimeout(() => {
+    const el = document.getElementById('nbhd-' + id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 350);
+}
+
+function expandMap() {
+  document.getElementById('map').classList.remove('collapsed');
+  document.getElementById('mapWrap').style.marginTop = '';
+  document.getElementById('mapWrap').style.padding = '';
+  document.getElementById('mapStrip').classList.remove('visible');
+  mapExpanded = true;
+  setTimeout(() => map.invalidateSize(), 400);
+}
+
+// Resize map on window resize
+window.addEventListener('resize', () => { if (mapExpanded) map.invalidateSize(); });
 </script>
 </body>
 </html>
