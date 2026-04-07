@@ -396,7 +396,7 @@ const NEIGHBORHOODS = [
   {
     id: 'sila',
     name: 'Sila',
-    city: 'Huffman, TX 77336',
+    cityHe: 'האפמן', cityEn: 'Huffman',
     hoa: 2300,
     mapUrl: 'https://www.google.com/maps/search/Sila+Huffman+TX+77336/@29.9268,-95.0681,14z',
     properties: [
@@ -465,7 +465,7 @@ const NEIGHBORHOODS = [
   {
     id: 'indian-springs',
     name: 'Indian Springs',
-    city: 'Crosby, TX 77532',
+    cityHe: 'קרוסבי', cityEn: 'Crosby',
     hoa: 756,
     mapUrl: 'https://www.google.com/maps/search/Indian+Springs+Crosby+TX+77532/@29.9085,-95.0078,14z',
     properties: [
@@ -512,7 +512,7 @@ const NEIGHBORHOODS = [
   {
     id: 'synova',
     name: 'Synova',
-    city: 'Crosby, TX 77532',
+    cityHe: 'קרוסבי', cityEn: 'Crosby',
     hoa: 2300,
     mapUrl: 'https://www.google.com/maps/search/Synova+Crosby+TX+77532/@29.9085,-95.0078,14z',
     properties: [
@@ -693,8 +693,8 @@ function renderAll() {
     <div class="neighborhood" id="nbhd-${n.id}">
       <div class="nbhd-header">
         <div class="nbhd-title-wrap">
-          <div class="nbhd-name"><span style="color:var(--muted);font-family:Heebo;font-size:11px;font-weight:400;">שכונה</span> <span dir="ltr" style="unicode-bidi:embed;">${n.name}</span></div>
-          <div class="nbhd-sub"><span style="opacity:0.6;">עיר</span> <span dir="ltr" style="unicode-bidi:embed;">${n.city}</span> <span style="opacity:0.4;">|</span> ${n.properties.length} דגמים</div>
+          <div class="nbhd-name"><span style="color:var(--muted);font-family:Heebo;font-size:11px;font-weight:400;">שכונה</span> <span dir="ltr" style="unicode-bidi:embed;">${n.name}</span> <span style="color:var(--muted);font-size:11px;font-weight:400;font-family:Heebo;">(${n.properties.length} דגמים)</span></div>
+          <div class="nbhd-sub"><span style="opacity:0.6;">עיר:</span> ${n.cityHe} <span dir="ltr" style="unicode-bidi:embed;opacity:0.5;">(${n.cityEn})</span></div>
         </div>
         <div class="nbhd-badges">
           <div class="nbhd-hoa">HOA: <span>$${n.hoa.toLocaleString()}/שנה</span></div>
