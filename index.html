@@ -576,7 +576,25 @@ const NEIGHBORHOODS = [
   }
 ];
 
-const ALL_PROPS = NEIGHBORHOODS.flatMap(n =>
+// --- URL PARAMS (per-client customization) ---
+const _params = new URLSearchParams(window.location.search);
+const _clientName = _params.get('client');
+const _models = _params.get('models') ? _params.get('models').split(',').map(s => s.trim()) : null;
+
+// Set client name if provided
+if (_clientName) {
+  document.getElementById('clientName').textContent = _clientName;
+}
+
+// Filter neighborhoods & properties based on URL
+const DISPLAY_NEIGHBORHOODS = _models
+  ? NEIGHBORHOODS.map(n => ({
+      ...n,
+      properties: n.properties.filter(p => _models.includes(p.id))
+    })).filter(n => n.properties.length > 0)
+  : NEIGHBORHOODS;
+
+const ALL_PROPS = DISPLAY_NEIGHBORHOODS.flatMap(n =>
   n.properties.map(p => ({ ...p, neighborhood: n }))
 );
 
@@ -699,7 +717,7 @@ function confirmSelection() {
 
 function renderAll() {
   const container = document.getElementById('nbhdContainer');
-  container.innerHTML = NEIGHBORHOODS.map(n => `
+  container.innerHTML = DISPLAY_NEIGHBORHOODS.map(n => `
     <div class="neighborhood" id="nbhd-${n.id}">
       <div class="nbhd-header">
         <div class="nbhd-title-wrap">
