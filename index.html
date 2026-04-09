@@ -339,7 +339,7 @@
 
 <header>
   <div class="logo">US Property Investments</div>
-  <div class="client-badge">שלום <span id="clientName">דויד וסטפני</span></div>
+  <div class="client-badge" id="clientBadge" style="display:none;">שלום <span id="clientName"></span></div>
 </header>
 
 <!-- MAP -->
@@ -561,6 +561,7 @@ const _models = _params.get('models') ? _params.get('models').split(',').map(s =
 // Set client name if provided
 if (_clientName) {
   document.getElementById('clientName').textContent = _clientName;
+  document.getElementById('clientBadge').style.display = '';
 }
 
 // Filter neighborhoods & properties based on URL
