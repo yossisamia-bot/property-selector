@@ -238,6 +238,8 @@
   .select-btn:hover { border-color:var(--gold); color:var(--gold); }
   .card.selected .select-btn { background:var(--gold); color:var(--dark); border-color:var(--gold); font-weight:700; }
 
+  .card-links { display: flex; gap: 6px; }
+  .floorplan-link { background: #1a2744 !important; }
   .lennar-link {
     font-size:10px; color:var(--blue); text-decoration:none; text-align:center; display:block; margin-top:4px;
   }
@@ -723,7 +725,10 @@ function renderCard(p, n) {
 
 
         <button class="select-btn">בחר מודל זה</button>
-        <a class="lennar-link" href="${p.lennarUrl}" target="_blank" onclick="event.stopPropagation()">צפה בלנאר</a>
+        <div class="card-links">
+          <a class="lennar-link" href="${p.lennarUrl}" target="_blank" onclick="event.stopPropagation()">צפה בלנאר</a>
+          <a class="lennar-link floorplan-link" href="${p.lennarUrl + '/walkthrough'}" target="_blank" onclick="event.stopPropagation()">📐 תוכנית</a>
+        </div>
       </div>
     </div>
   `;
@@ -733,11 +738,11 @@ renderAll();
 
 // ─── MAP ─────────────────────────────────────────────────────────────────
 const MAP_COORDS = {
-  'sila':           { lat: 29.9268, lng: -95.0681, label: 'Sila · האפמן' },
-  'indian-springs': { lat: 29.9713, lng: -95.1130, label: 'Indian Springs · קרוסבי' },
-  'synova':         { lat: 29.9400, lng: -95.0900, label: 'Synova · קרוסבי' },
+  'sila':           { lat: 30.0050, lng: -95.0760, label: 'Sila · האפמן' },
+  'indian-springs': { lat: 29.9830, lng: -95.0780, label: 'Indian Springs · קרוסבי' },
+  'synova':         { lat: 29.9520, lng: -95.0850, label: 'Synova · קרוסבי' },
 };
-const HOUSTON_CENTER = [29.94, -95.09];
+const HOUSTON_CENTER = [29.98, -95.08];
 
 const map = L.map('map', {
   zoomControl: true,
