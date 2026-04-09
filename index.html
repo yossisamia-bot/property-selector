@@ -84,6 +84,49 @@
   .intro p { display:none; }
 
   .neighborhoods { max-width:1200px; margin:0 auto; padding:10px 18px 0; display:flex; flex-direction:column; gap:20px; }
+  .info-panel {
+    max-width: 1200px; margin: 0 auto 16px; font-family: 'Heebo', sans-serif;
+  }
+  .info-section {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 10px; margin-bottom: 8px; overflow: hidden;
+  }
+  .info-title {
+    padding: 12px 20px; font-weight: 600; font-size: 0.85rem;
+    color: var(--gold); cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  }
+  .info-title:hover { opacity: 0.8; }
+  .info-arrow { transition: transform 0.2s; font-size: 0.7rem; }
+  .info-section.open .info-arrow { transform: rotate(90deg); }
+  .info-body {
+    display: none; padding: 4px 20px 16px;
+  }
+  .info-section.open .info-body { display: block; }
+  .info-body p {
+    font-size: 0.78rem; color: var(--muted); margin: 6px 0; line-height: 1.7;
+  }
+  .info-body b { color: var(--text); }
+  .info-block { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .info-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .info-block-title {
+    font-weight: 600; font-size: 0.82rem; color: var(--text); margin-bottom: 6px;
+  }
+  .info-columns { display: flex; gap: 16px; }
+  .info-col { flex: 1; background: rgba(255,255,255,0.03); border-radius: 8px; padding: 12px; border: 1px solid var(--border); }
+  .info-col-title { font-weight: 600; font-size: 0.8rem; color: var(--text); margin-bottom: 8px; }
+  .info-example-link {
+    display: inline-block; margin-top: 6px; font-size: 0.7rem; color: var(--gold);
+    text-decoration: none; opacity: 0.7;
+  }
+  .info-example-link:hover { opacity: 1; text-decoration: underline; }
+  .info-bottom-note {
+    margin-top: 12px; padding: 10px 14px; background: rgba(255,255,255,0.03);
+    border-radius: 8px; font-size: 0.75rem; color: var(--muted); line-height: 1.7; border: 1px solid var(--border);
+  }
+  .info-bottom-note b { color: var(--gold); }
+  @media (max-width: 700px) {
+    .info-columns { flex-direction: column; }
+  }
   .neighborhood {
     background:var(--dark2); border:1px solid var(--border);
     border-radius:18px; overflow:hidden;
@@ -400,6 +443,50 @@
   
 </div>
 
+<div class="info-panel">
+  <div class="info-section">
+    <div class="info-title" onclick="this.parentElement.classList.toggle('open')">📍 על השכונות <span class="info-arrow">▸</span></div>
+    <div class="info-body">
+      <div class="info-block">
+        <div class="info-block-title">Sila — האפמן (צפון), ליד ניו קאני</div>
+        <p><b>היתרון:</b> שלב ראשון (פייז A). מחירים ממש נמוכים ביחס להכל — כמו כל שכונה זה יסתיים מיד כשיעברו לשלב ב׳ ולא נוכל להשיג כזה מחיר. זה ממש מתחת למחירי בנייה עד כדי בית ב-143 אלף של 1,505 סקוור (כלומר 95 דולר לסקוור פיט), זה פחות ממה שעולה להם לבנות אותו ברמה הזו.</p>
+        <p><b>החסרון:</b> שכונה חדשה עלולה לעכב ביקוש לשכירות, מבחינתנו שילמנו פחות בגלל זה אז "לא נורא". בכל מקום צריך להבין שכמה שקלים פחות והבית יושכר מיידית, עדיף מאשר להשאיר בית ריק לכמה חודשים.</p>
+        <p>השכונה במיקום צפוני קרוב לשדה תעופה ולקליבלנד, קרוב ליוסטון יחסית (30 ד) וקומיוניטי שעתיד להיות ענק מבחינת כמות בתים. בתים בניו קאני (עיירה צמודה, שם קנינו גם) נמכרים ב-50-60 אלף יותר מהמחירים כאן כרגע. לדעתנו שנה שנתיים מהיום וזה אותן שכונות.</p>
+      </div>
+      <div class="info-block">
+        <div class="info-block-title">קרוסבי (Indian Springs + Synova)</div>
+        <p>קרוסבי — קרוב יותר לנמל ולכל תעשיית הגז/נפט, קצת יותר קרוב ליוסטון ליד אגם יפהפה. הרבה פיתוח מסביב ומקומות עבודה.</p>
+        <p>כמה שכונות בנויות כבר — מחירים מאוד אטרקטיבים גם לבתים וגם לשכירות (כבר גבוה יותר מסילה אבל עדיין אטרקטיבי ביחס לשכונות מפותחות).</p>
+        <p>אנחנו עובדים גם עם רילוקיישנרים וחברות תיווך — להבדיל מחברת ניהול נכסים שמוכנה לעבוד רק כשמקבלים מפתח לבית. ככה מיד עם חתימת החוזה והעברת EARNEST MONEY (דמי רצינות) עוד לפני המסירה הסופית, אנחנו נתחיל לשווק את הבית לשכירות מיידית. כדי לצמצם המתנה.</p>
+        <p>לדעתינו מבחינת שווי בעתיד אין סיבה שסילה וקרוסבי לא יגיעו לאותו מקום אבל קרוסבי יותר קל להשכיר מהר מאוד את הבתים (לא מובטח כלום) כי השכונה כבר יותר מתקדמת. מצד שני מראש משלמים יותר על הבתים.</p>
+      </div>
+    </div>
+  </div>
+  <div class="info-section">
+    <div class="info-title" onclick="this.parentElement.classList.toggle('open')">🏠 סוגי בתים — קומה אחת מול 2 קומות <span class="info-arrow">▸</span></div>
+    <div class="info-body">
+      <p style="opacity:0.7;margin-bottom:8px;">קודם כל תמיד 3 חדרי שינה ומעלה.</p>
+      <div class="info-columns">
+        <div class="info-col">
+          <div class="info-col-title">2 קומות <span style="opacity:0.5;">(מעץ, גראז׳ 1)</span></div>
+          <p><b>יתרון:</b> מעט הוצאות, גינה קטנה, מחיר נמוך יותר, מבחינת השכרה תשואה עשויה להיות מעולה כי המחיר רכישה נמוך מאוד.</p>
+          <p><b>חסרון:</b> גינה קטנה, גראז׳ 1, מדרגות, ובשווי בתים שנראים קצת פחות טוב, הערך לא תמיד יעלה במלוא הפוטנציאל — חתך אוכלוסיה קצת פחות מאשר לקומה אחת.</p>
+          <a class="info-example-link" href="https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/pima" target="_blank">דוגמה: Pima (2 קומות) ←</a>
+          <a class="info-example-link" href="https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/cibola" target="_blank">דוגמה: Cibola (2 קומות) ←</a>
+        </div>
+        <div class="info-col">
+          <div class="info-col-title">קומה אחת <span style="opacity:0.5;">(עטוף אבן, 2 גראז׳)</span></div>
+          <p><b>יתרון:</b> 2 גראז׳, אין מדרגות, גינה גדולה יותר.</p>
+          <p><b>חסרון:</b> יותר הוצאות תחזוקה בגלל 2 גראז׳ וגינה גדולה יותר וגג גדול יותר, ועלות גבוהה יותר ביחס לבתים של ה-2 קומות.</p>
+          <a class="info-example-link" href="https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/ramsey" target="_blank">דוגמה: Ramsey (קומה אחת) ←</a>
+        </div>
+      </div>
+      <div class="info-bottom-note">
+        <b>בפועל:</b> בטבעיות אנחנו מעדיפים את ה׳קומה אחת׳ במיוחד אחרי שהיינו שם, אבל המציאות מראה שכל מי שקנה 2 קומות משכיר בקלות ואז התשואה הייתה גבוהה יותר כי המחיר שכירות לא היה שונה מאשר בקומה אחת (ברור שאם אדם יעמוד מול זה ומול זה כנראה יסכים לשלם קצת יותר על קומה אחת).
+      </div>
+    </div>
+  </div>
+</div>
 <div class="neighborhoods" id="nbhdContainer"></div>
 
 <div class="footer-cta" id="footerCta">
