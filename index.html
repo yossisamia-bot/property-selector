@@ -383,7 +383,7 @@
 
 <div class="intro">
   <h1>בחרו שכונה ומודל</h1>
-  <p>שכירות מוערכת ותזרים מחושבים אוטומטית. ניתן לערוך את השכירות ידנית.</p>
+  
 </div>
 
 <div class="neighborhoods" id="nbhdContainer"></div>
@@ -772,25 +772,7 @@ function renderCard(p, n) {
         </div>
         ${p.note ? `<div class="note-tag">${p.note}</div>` : ''}
 
-        <div class="cf-row" onclick="event.stopPropagation()">
-          <div class="cf-rent-line">
-            <label>שכירות מוערכת${compLine ? ' <span style="opacity:0.5;font-size:9px">(' + compLine + ')</span>' : ''}</label>
-            <div class="rent-input-wrap">
-              <span>$</span>
-              <input type="number" value="${initRent}" min="0"
-                     oninput="onRentInput('${p.id}', this.value)" />
-            </div>
-          </div>
-          <button class="expense-toggle" onclick="toggleExpense('${p.id}')" id="exp-toggle-${p.id}">
-            <span class="icon">+</span>
-            <span>פירוט הוצאות</span>
-          </button>
-          <div class="expense-detail" id="exp-${p.id}"></div>
-          <div class="cf-result">
-            <span class="cf-result-label">תזרים חודשי מוערך</span>
-            <span class="cf-result-val" id="cf-${p.id}">—</span>
-          </div>
-        </div>
+
 
         <button class="select-btn">בחר מודל זה</button>
         <a class="lennar-link" href="${p.lennarUrl}" target="_blank" onclick="event.stopPropagation()">צפה בלנאר</a>
