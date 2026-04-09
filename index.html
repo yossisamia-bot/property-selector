@@ -184,6 +184,43 @@
   .card.selected .check-overlay { opacity:1; transform:scale(1); }
   .check-overlay svg { width:12px; height:12px; }
 
+
+  /* IMAGE CAROUSEL */
+  .card-carousel {
+    position:relative; width:100%; height:160px; overflow:hidden;
+    background:var(--dark3);
+  }
+  .card-carousel img {
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    object-fit:cover; opacity:0; transition:opacity 0.35s ease;
+  }
+  .card-carousel img.active { opacity:1; }
+  .carousel-dots {
+    position:absolute; bottom:8px; left:50%; transform:translateX(-50%);
+    display:flex; gap:6px; z-index:3;
+  }
+  .carousel-dot {
+    width:8px; height:8px; border-radius:50%;
+    background:rgba(255,255,255,0.35); border:1px solid rgba(255,255,255,0.5);
+    cursor:pointer; transition:all 0.2s; padding:0;
+  }
+  .carousel-dot.active {
+    background:var(--gold); border-color:var(--gold);
+    transform:scale(1.2);
+  }
+  .carousel-nav {
+    position:absolute; top:50%; transform:translateY(-50%);
+    background:rgba(0,0,0,0.4); color:#fff; border:none;
+    width:28px; height:28px; border-radius:50%; cursor:pointer;
+    font-size:14px; display:flex; align-items:center; justify-content:center;
+    opacity:0; transition:opacity 0.2s; z-index:3;
+    font-family:sans-serif; padding:0;
+  }
+  .card-carousel:hover .carousel-nav { opacity:1; }
+  .carousel-nav.prev { left:6px; }
+  .carousel-nav.next { right:6px; }
+  .carousel-nav:hover { background:rgba(0,0,0,0.7); }
+
   /* IMAGE */
   .card-img {
     width:100%; height:160px; object-fit:cover; display:block;
@@ -425,7 +462,8 @@ const NEIGHBORHOODS = [
         sqft: 1720, beds: 4, baths: 2, garage: 2, floors: 1,
         priceMin: 180000, priceMax: 200000,
         estRent: 1800, compRent: 1650,
-        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/ramsey/22637892524',
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/ramsey',
+        floorplanUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/ramsey/walkthrough',
         recommended: true,
         images: [
           'https://cdn.lennar.com/api/images/contentassets/f733edbd7e48429585d5235c76e0d4af/copy-of-copy-of-grove_core_hou_3330_rend_ramsey_j.jpg?w=800',
@@ -437,7 +475,8 @@ const NEIGHBORHOODS = [
         sqft: 1522, beds: 3, baths: 2, garage: 2, floors: 1,
         priceMin: 170000, priceMax: 190000,
         estRent: 1750, compRent: 1500,
-        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/newlin/22637892705',
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/newlin',
+        floorplanUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/newlin/walkthrough',
         recommended: false,
         images: [
           'https://cdn.lennar.com/api/images/contentassets/11521569e4664d31a4de857c5791a1e9/copy-of-copy-of-grove_core_hou_3320_rend_newlin_m1_111924.jpg?w=800',
@@ -449,7 +488,8 @@ const NEIGHBORHOODS = [
         sqft: 1535, beds: 4, baths: 3, garage: 1, floors: 2,
         priceMin: 160000, priceMax: 170000,
         estRent: 1725, compRent: 1600,
-        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/cibola/22635833216',
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/cibola',
+        floorplanUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/cibola/walkthrough',
         recommended: false,
         images: [
           'https://cdn.lennar.com/api/images/contentassets/c4e46e7d09f84f2aba33c3aec1c8ad08/san_1531_wellton_astonpark_rend_cibola_c.jpg?w=800',
@@ -461,7 +501,8 @@ const NEIGHBORHOODS = [
         sqft: 1360, beds: 3, baths: 3, garage: 1, floors: 2,
         priceMin: 150000, priceMax: 160000,
         estRent: 1650, compRent: 1400,
-        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/pima/22635833215',
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/pima',
+        floorplanUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/pima/walkthrough',
         recommended: false,
         images: [
           'https://cdn.lennar.com/api/images/contentassets/c6a0c35a474041cfb559ee26b055941f/san_1521_wellton_ashtonpark_rend_pima_d.jpg?w=800',
@@ -473,7 +514,8 @@ const NEIGHBORHOODS = [
         sqft: 1302, beds: 3, baths: 2, garage: 2, floors: 1,
         priceMin: 160000, priceMax: 180000,
         estRent: 1700, compRent: 1450,
-        lennarUrl: 'https://www.zillow.com/homedetails/31504-Olivella-Dr-Huffman-TX-77336/461266715_zpid/',
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/beckman',
+        floorplanUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/beckman/walkthrough',
         recommended: false,
         images: [
           'https://cdn.lennar.com/api/images/contentassets/565d42e668eb45f5b5b33b17a85974c1/copy-of-copy-of-copy-of-copy-of-grove_core_hou_3310_rend_beckman_j.jpg?w=800',
@@ -498,7 +540,8 @@ const NEIGHBORHOODS = [
         sqft: 1409, beds: 3, baths: 2, garage: 2, floors: 1,
         priceMin: 190000, priceMax: 210000,
         estRent: 1850, compRent: 1600,
-        lennarUrl: 'https://investor-marketplace.lennar.com/portal/properties/750658/images',
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/indian-springs/cottage-collection/kitson',
+        floorplanUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/indian-springs/cottage-collection/kitson/walkthrough',
         recommended: true,
         images: [
           'https://cdn.lennar.com/api/images/contentassets/9858f72770384bf7a299b304419a6119/copy-of-copy-of-copy-of-copy-of-grove_core_hou_2520_rend_kitson_h.jpg?w=800',
@@ -510,7 +553,8 @@ const NEIGHBORHOODS = [
         sqft: 1535, beds: 4, baths: 3, garage: 1, floors: 2,
         priceMin: 170000, priceMax: 190000,
         estRent: 1600, compRent: null,
-        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/cibola/22635833216',
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/indian-springs/wellton-collection/cibola',
+        floorplanUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/indian-springs/wellton-collection/cibola/walkthrough',
         recommended: false,
         images: [
           'https://cdn.lennar.com/api/images/contentassets/c4e46e7d09f84f2aba33c3aec1c8ad08/san_1531_wellton_astonpark_rend_cibola_c.jpg?w=800',
@@ -523,7 +567,8 @@ const NEIGHBORHOODS = [
         sqft: 1360, beds: 3, baths: 3, garage: 1, floors: 2,
         priceMin: 160000, priceMax: 170000,
         estRent: 1550, compRent: null,
-        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/pima/22635833215',
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/indian-springs/wellton-collection/pima',
+        floorplanUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/indian-springs/wellton-collection/pima/walkthrough',
         recommended: false,
         images: [
           'https://cdn.lennar.com/api/images/contentassets/c6a0c35a474041cfb559ee26b055941f/san_1521_wellton_ashtonpark_rend_pima_d.jpg?w=800',
@@ -549,7 +594,8 @@ const NEIGHBORHOODS = [
         sqft: 1656, beds: 4, baths: 2, garage: 2, floors: 1,
         priceMin: 190000, priceMax: 210000,
         estRent: 2000, compRent: null,
-        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/pinehollow/22615845148',
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/pinehollow',
+        floorplanUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/pinehollow/walkthrough',
         recommended: true,
         images: [
           'https://cdn.lennar.com/api/images/contentassets/181aeaa2ade64692a8e73365f7d7e41e/copy-of-copy-of-grove_core_hou_2550_rend_pinehollow_h.jpg?w=800',
@@ -561,7 +607,8 @@ const NEIGHBORHOODS = [
         sqft: 1409, beds: 3, baths: 2, garage: 2, floors: 1,
         priceMin: 190000, priceMax: 210000,
         estRent: 1850, compRent: null,
-        lennarUrl: 'https://investor-marketplace.lennar.com/portal/properties/750658/images',
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/kitson',
+        floorplanUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/kitson/walkthrough',
         recommended: false,
         images: [
           'https://cdn.lennar.com/api/images/contentassets/9858f72770384bf7a299b304419a6119/copy-of-copy-of-copy-of-copy-of-grove_core_hou_2520_rend_kitson_j.jpg?w=800',
@@ -573,7 +620,8 @@ const NEIGHBORHOODS = [
         sqft: 2039, beds: 4, baths: 3, garage: 2, floors: 1,
         priceMin: 210000, priceMax: 230000,
         estRent: null, compRent: 1900,
-        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/whitetail/22615845149',
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/whitetail',
+        floorplanUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/whitetail/walkthrough',
         recommended: false,
         images: [
           'https://cdn.lennar.com/api/images/contentassets/f57016424c8f49ffa759ecbb4cab36b5/copy-of-copy-of-grove_core_hou_2560_rend_whitetail_h.jpg?w=800',
@@ -586,7 +634,8 @@ const NEIGHBORHOODS = [
         sqft: 1302, beds: 3, baths: 2, garage: 2, floors: 1,
         priceMin: 175000, priceMax: 195000,
         estRent: 1750, compRent: null,
-        lennarUrl: 'https://www.zillow.com/homedetails/1523-Gardenia-Grove-Ln-Crosby-TX-77532/460667246_zpid/',
+        lennarUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/beckman',
+        floorplanUrl: 'https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/beckman/walkthrough',
         recommended: false,
         images: [
           'https://cdn.lennar.com/api/images/contentassets/565d42e668eb45f5b5b33b17a85974c1/copy-of-copy-of-grove_core_hou_3310_rend_beckman_m1_111824.jpg?w=800',
@@ -745,9 +794,25 @@ function renderCard(p, n) {
   const compLine = p.compRent ? `comp: $${p.compRent.toLocaleString()}` : '';
 
   const hasImages = p.images && p.images.length > 0;
-  const imgHtml = hasImages
-    ? `<img class="card-img" src="${p.images[0]}" loading="lazy" onerror="this.outerHTML='<div class=card-img-placeholder>תמונה לא זמינה</div>'" />`
-    : `<div class="card-img-placeholder">תמונות בקרוב</div>`;
+  let imgHtml;
+  if (hasImages && p.images.length > 1) {
+    const imgs = p.images.map((src, i) =>
+      `<img src="${src}" loading="lazy" class="${i === 0 ? 'active' : ''}" onerror="this.style.display='none'" />`
+    ).join('');
+    const dots = p.images.map((_, i) =>
+      `<button class="carousel-dot ${i === 0 ? 'active' : ''}" onclick="event.stopPropagation();goSlide('${p.id}',${i})" aria-label="image ${i+1}"></button>`
+    ).join('');
+    imgHtml = `<div class="card-carousel" id="carousel-${p.id}">
+      ${imgs}
+      <button class="carousel-nav prev" onclick="event.stopPropagation();stepSlide('${p.id}',-1)">&lsaquo;</button>
+      <button class="carousel-nav next" onclick="event.stopPropagation();stepSlide('${p.id}',1)">&rsaquo;</button>
+      <div class="carousel-dots">${dots}</div>
+    </div>`;
+  } else if (hasImages) {
+    imgHtml = `<img class="card-img" src="${p.images[0]}" loading="lazy" onerror="this.outerHTML='<div class=card-img-placeholder>no image</div>'" />`;
+  } else {
+    imgHtml = `<div class="card-img-placeholder">no images yet</div>`;
+  }
 
   return `
     <div class="card" id="card-${p.id}" onclick="selectCard('${p.id}')">
@@ -778,7 +843,7 @@ function renderCard(p, n) {
         <button class="select-btn">בחר מודל זה</button>
         <div class="card-links">
           <a class="lennar-link" href="${p.lennarUrl}" target="_blank" onclick="event.stopPropagation()">צפה בלנאר</a>
-          <a class="lennar-link floorplan-link" href="${p.lennarUrl + '/walkthrough'}" target="_blank" onclick="event.stopPropagation()">📐 תוכנית</a>
+          <a class="lennar-link floorplan-link" href="${p.floorplanUrl || (p.lennarUrl + '/walkthrough')}" target="_blank" onclick="event.stopPropagation()">📐 תוכנית</a>
         </div>
       </div>
     </div>
@@ -791,6 +856,46 @@ document.querySelector('.home-types-title').onclick = function() {
 };
 document.getElementById('homeTypesContent').innerHTML = HOME_TYPES_TEXT.split('
 ').map(l => '<p>' + l + '</p>').join('');
+
+
+// ─── CAROUSEL FUNCTIONS ─────────────────────────────────────────────────
+const carouselState = {};
+
+function goSlide(propId, idx) {
+  const carousel = document.getElementById('carousel-' + propId);
+  if (!carousel) return;
+  const imgs = carousel.querySelectorAll('img');
+  const dots = carousel.querySelectorAll('.carousel-dot');
+  const safeIdx = ((idx % imgs.length) + imgs.length) % imgs.length;
+  imgs.forEach((img, i) => img.classList.toggle('active', i === safeIdx));
+  dots.forEach((dot, i) => dot.classList.toggle('active', i === safeIdx));
+  carouselState[propId] = safeIdx;
+}
+
+function stepSlide(propId, dir) {
+  const current = carouselState[propId] || 0;
+  const carousel = document.getElementById('carousel-' + propId);
+  if (!carousel) return;
+  const count = carousel.querySelectorAll('img').length;
+  goSlide(propId, current + dir);
+}
+
+// Touch swipe support for carousels
+document.addEventListener('touchstart', function(e) {
+  const carousel = e.target.closest('.card-carousel');
+  if (!carousel) return;
+  carousel._touchX = e.touches[0].clientX;
+}, { passive: true });
+document.addEventListener('touchend', function(e) {
+  const carousel = e.target.closest('.card-carousel');
+  if (!carousel || !carousel._touchX) return;
+  const diff = carousel._touchX - e.changedTouches[0].clientX;
+  const propId = carousel.id.replace('carousel-', '');
+  if (Math.abs(diff) > 40) {
+    stepSlide(propId, diff > 0 ? 1 : -1);
+  }
+  carousel._touchX = null;
+});
 
 renderAll();
 
