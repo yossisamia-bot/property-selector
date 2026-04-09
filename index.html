@@ -777,8 +777,7 @@ function renderAll() {
           <a class="map-area-btn" href="${n.mapUrl}" target="_blank">צילום אוויר</a>
         </div>
       </div>
-      ${n.desc ? '<div class="nbhd-desc">' + n.desc.split('
-').map(line => '<p>' + line + '</p>').join('') + '</div>' : ''}
+      ${n.desc ? '<div class="nbhd-desc">' + n.desc.split('\n').map(line => '<p>' + line + '</p>').join('') + '</div>' : ''}
       <div class="nbhd-cards">
         ${n.properties.map(p => renderCard(p, n)).join('')}
       </div>
@@ -854,8 +853,7 @@ function renderCard(p, n) {
 document.querySelector('.home-types-title').onclick = function() {
   document.getElementById('homeTypesContent').classList.toggle('open');
 };
-document.getElementById('homeTypesContent').innerHTML = HOME_TYPES_TEXT.split('
-').map(l => '<p>' + l + '</p>').join('');
+document.getElementById('homeTypesContent').innerHTML = HOME_TYPES_TEXT.split('\n').map(l => '<p>' + l + '</p>').join('');
 
 
 // ─── CAROUSEL FUNCTIONS ─────────────────────────────────────────────────
