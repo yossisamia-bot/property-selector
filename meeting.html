@@ -150,7 +150,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Heebo', sans-ser
 </div>
 
 <!-- Home types -->
-<div class="section open">
+<div class="section">
   <div class="section-title" onclick="this.parentElement.classList.toggle('open')">
     🏠 סוגי בתים — קומה אחת מול 2 קומות
     <span class="section-arrow">▸</span>
@@ -333,7 +333,7 @@ const locations = [
 locations.forEach(loc => {
   const icon = L.divIcon({
     className: '',
-    html: `<div style="background:var(--gold);color:#000;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;white-space:nowrap;font-family:Heebo;">${loc.name}</div>`,
+    html: `<div style="background:#fff;color:#1a1a2e;padding:4px 10px;border-radius:5px;font-size:12px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.5);border:2px solid var(--gold);white-space:nowrap;font-family:Heebo;">${loc.name}</div>`,
     iconAnchor: [50, 10]
   });
   L.marker([loc.lat, loc.lng], { icon }).addTo(map);
