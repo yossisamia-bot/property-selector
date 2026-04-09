@@ -631,37 +631,7 @@ function onRentInput(id, val) {
 }
 
 function updateCard(p) {
-  const rent = rentState[p.id] ?? null;
-  const cfEl = document.getElementById(`cf-${p.id}`);
-  const expEl = document.getElementById(`exp-${p.id}`);
-  if (!cfEl) return;
-
-  if (rent === null || rent <= 0) {
-    cfEl.textContent = '—';
-    cfEl.className = 'cf-result-val';
-    if (expEl) expEl.innerHTML = '';
-    return;
-  }
-
-  const pd = priceDisplay(p);
-  const hoa = p.neighborhood.hoa;
-  const { mortgage, propTax, insurance, mgmt, hoaMonthly, cashflow } =
-    calcCashflow(pd, rent, finPct, annualRate, hoa);
-
-  cfEl.textContent = (cashflow >= 0 ? '+' : '') + fmt(cashflow);
-  cfEl.className = 'cf-result-val ' + (cashflow >= 0 ? 'green' : 'red');
-
-  const lines = [];
-  if (finPct > 0) lines.push(`<div>משכנתא (P+I)<span>${fmt(mortgage)}</span></div>`);
-  lines.push(`<div>מס רכוש 3.2%<span>${fmt(propTax)}</span></div>`);
-  lines.push(`<div>ביטוח<span>${fmt(insurance)}</span></div>`);
-  lines.push(`<div>ניהול 8%<span>${fmt(mgmt)}</span></div>`);
-  lines.push(`<div>HOA<span>${fmt(hoaMonthly)}</span></div>`);
-  lines.push(`<div style="border-top:1px solid var(--border);margin-top:3px;padding-top:3px;font-weight:600;color:var(--text);opacity:0.8;">סה״כ הוצאות חודשיות מוערכות<span>${fmt(mortgage + propTax + insurance + mgmt + hoaMonthly)}</span></div>`);
-  if (finPct > 0) {
-    lines.push(`<div style="margin-top:6px;font-size:8px;opacity:0.5;color:var(--gold);">הקמת הלוואה (חד-פעמי): $4,500</div>`);
-  }
-  if (expEl) expEl.innerHTML = lines.join('');
+  // Catalog mode - no financial calculations
 }
 
 function selectCard(propId) {
