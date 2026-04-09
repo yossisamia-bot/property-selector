@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>השקעה בנדל"ן — יוסטון, טקסס</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root {
+  --bg: #0F1117; --card-bg: #181B24; --border: #2a2d38;
+  --text: #E8E6E3; --muted: #9CA3AF; --gold: #D4A843;
+  --green: #34D399; --red: #F87171;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Heebo', sans-serif; direction: rtl; }
+
+.header {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  padding: 16px 24px; text-align: center;
+  border-bottom: 2px solid var(--gold);
+}
+.header h1 { font-size: 1.3rem; font-weight: 600; color: var(--gold); }
+.header p { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 16px; }
+
+/* Map */
+.map-section { margin-bottom: 16px; }
+.map-section h2 { font-size: 1rem; color: var(--gold); margin-bottom: 8px; }
+#map { height: 250px; border-radius: 10px; border: 1px solid var(--border); }
+
+/* Sections */
+.section {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 10px; margin-bottom: 12px; overflow: hidden;
+}
+.section-title {
+  padding: 12px 18px; font-weight: 600; font-size: 0.9rem;
+  color: var(--gold); cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.section-title:hover { opacity: 0.85; }
+.section-arrow { transition: transform 0.2s; font-size: 0.7rem; }
+.section.open .section-arrow { transform: rotate(90deg); }
+.section-body { display: none; padding: 0 18px 16px; }
+.section.open .section-body { display: block; }
+
+.nbhd-block { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.nbhd-block:last-child { border-bottom: none; }
+.nbhd-name { font-weight: 600; font-size: 0.85rem; color: var(--text); margin-bottom: 6px; }
+.nbhd-name a { color: var(--gold); font-size: 0.7rem; text-decoration: none; margin-right: 8px; opacity: 0.7; }
+.nbhd-name a:hover { opacity: 1; text-decoration: underline; }
+.section-body p { font-size: 0.78rem; color: var(--muted); margin: 5px 0; line-height: 1.7; }
+.section-body b { color: var(--text); }
+
+/* Home types columns */
+.types-grid { display: flex; gap: 12px; margin-top: 8px; }
+.type-col {
+  flex: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px; position: relative;
+}
+.type-col-title { font-weight: 600; font-size: 0.82rem; color: var(--text); margin-bottom: 6px; }
+.type-col-sub { font-size: 0.68rem; color: var(--muted); margin-bottom: 8px; }
+.type-col p { font-size: 0.75rem; color: var(--muted); margin: 4px 0; line-height: 1.6; }
+.type-col b { color: var(--text); }
+.bottom-note {
+  margin-top: 12px; padding: 10px 14px; background: rgba(255,255,255,0.03);
+  border-radius: 8px; font-size: 0.75rem; color: var(--muted); line-height: 1.7;
+  border: 1px solid var(--border);
+}
+.bottom-note b { color: var(--gold); }
+
+/* Models grid */
+.models-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin-top: 8px; }
+.model-card {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden; transition: border-color 0.2s;
+}
+.model-card:hover { border-color: var(--gold); }
+.model-card img { width: 100%; height: 140px; object-fit: cover; }
+.model-card-body { padding: 8px 10px; }
+.model-card-name { font-weight: 600; font-size: 0.8rem; }
+.model-card-specs { font-size: 0.68rem; color: var(--muted); margin-top: 3px; }
+.model-card-price { font-size: 0.75rem; color: var(--gold); margin-top: 3px; font-weight: 600; }
+.model-card a {
+  display: block; text-align: center; font-size: 0.68rem; color: var(--gold);
+  text-decoration: none; padding: 6px; border-top: 1px solid var(--border); margin-top: 6px;
+}
+.model-card a:hover { background: rgba(255,255,255,0.05); }
+
+/* Footer */
+.footer-links {
+  text-align: center; padding: 20px; font-size: 0.72rem; color: var(--muted);
+}
+.footer-links a {
+  color: var(--gold); text-decoration: none; margin: 0 8px;
+  padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px;
+}
+.footer-links a:hover { background: rgba(212,168,67,0.1); }
+
+@media (max-width: 600px) {
+  .types-grid { flex-direction: column; }
+  .models-grid { grid-template-columns: 1fr 1fr; }
+  #map { height: 180px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏠 השקעה בנדל"ן — יוסטון, טקסס</h1>
+  <p>שכונות לנאר — מידע לבחירת בית</p>
+</div>
+
+<div class="container">
+
+<!-- Map -->
+<div class="map-section">
+  <div id="map"></div>
+</div>
+
+<!-- Neighborhoods -->
+<div class="section open">
+  <div class="section-title" onclick="this.parentElement.classList.toggle('open')">
+    📍 על השכונות
+    <span class="section-arrow">▸</span>
+  </div>
+  <div class="section-body">
+    <div class="nbhd-block">
+      <div class="nbhd-name">Sila — האפמן (צפון), ליד ניו קאני
+        <a href="https://www.google.com/maps/place/Sila,+Huffman,+TX" target="_blank">📍 מפה</a>
+      </div>
+      <p><b>היתרון:</b> שלב ראשון (פייז A). מחירים ממש נמוכים ביחס להכל — כמו כל שכונה זה יסתיים מיד כשיעברו לשלב ב׳ ולא נוכל להשיג כזה מחיר. זה ממש מתחת למחירי בנייה עד כדי בית ב-143 אלף של 1,505 סקוור (כלומר 95 דולר לסקוור פיט), זה פחות ממה שעולה להם לבנות אותו ברמה הזו.</p>
+      <p><b>החסרון:</b> שכונה חדשה עלולה לעכב ביקוש לשכירות, מבחינתנו שילמנו פחות בגלל זה אז "לא נורא". בכל מקום צריך להבין שכמה שקלים פחות והבית יושכר מיידית, עדיף מאשר להשאיר בית ריק לכמה חודשים.</p>
+      <p>השכונה במיקום צפוני קרוב לשדה תעופה ולקליבלנד, קרוב ליוסטון יחסית (30 ד) וקומיוניטי שעתיד להיות ענק מבחינת כמות בתים. בתים בניו קאני (עיירה צמודה, שם קנינו גם) נמכרים ב-50-60 אלף יותר מהמחירים כאן כרגע. לדעתנו שנה שנתיים מהיום וזה אותן שכונות.</p>
+    </div>
+    <div class="nbhd-block">
+      <div class="nbhd-name">קרוסבי (Indian Springs + Synova)
+        <a href="https://www.google.com/maps/place/Crosby,+TX" target="_blank">📍 מפה</a>
+      </div>
+      <p>קרוסבי — קרוב יותר לנמל ולכל תעשיית הגז/נפט, קצת יותר קרוב ליוסטון ליד אגם יפהפה. הרבה פיתוח מסביב ומקומות עבודה.</p>
+      <p>כמה שכונות בנויות כבר — מחירים מאוד אטרקטיבים גם לבתים וגם לשכירות (כבר גבוה יותר מסילה אבל עדיין אטרקטיבי ביחס לשכונות מפותחות).</p>
+      <p>אנחנו עובדים גם עם רילוקיישנרים וחברות תיווך — להבדיל מחברת ניהול נכסים שמוכנה לעבוד רק כשמקבלים מפתח לבית. ככה מיד עם חתימת החוזה והעברת EARNEST MONEY (דמי רצינות) עוד לפני המסירה הסופית, אנחנו נתחיל לשווק את הבית לשכירות מיידית. כדי לצמצם המתנה.</p>
+      <p>לדעתינו מבחינת שווי בעתיד אין סיבה שסילה וקרוסבי לא יגיעו לאותו מקום אבל קרוסבי יותר קל להשכיר מהר מאוד את הבתים (לא מובטח כלום) כי השכונה כבר יותר מתקדמת. מצד שני מראש משלמים יותר על הבתים.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Home types -->
+<div class="section open">
+  <div class="section-title" onclick="this.parentElement.classList.toggle('open')">
+    🏠 סוגי בתים — קומה אחת מול 2 קומות
+    <span class="section-arrow">▸</span>
+  </div>
+  <div class="section-body">
+    <p style="opacity:0.6;margin-bottom:10px;">קודם כל תמיד 3 חדרי שינה ומעלה.</p>
+    <div class="types-grid">
+      <div class="type-col">
+        <div class="type-col-title">2 קומות</div>
+        <div class="type-col-sub">מעץ, גראז׳ 1</div>
+        <img src="https://cdn.lennar.com/api/images/contentassets/c4e46e7d09f84f2aba33c3aec1c8ad08/san_1531_wellton_astonpark_rend_cibola_c.jpg?w=500" style="width:100%;border-radius:6px;margin-bottom:8px;" />
+        <p><b>יתרון:</b> מעט הוצאות, גינה קטנה, מחיר נמוך יותר, מבחינת השכרה תשואה עשויה להיות מעולה כי המחיר רכישה נמוך מאוד.</p>
+        <p><b>חסרון:</b> גינה קטנה, גראז׳ 1, מדרגות, ובשווי בתים שנראים קצת פחות טוב, הערך לא תמיד יעלה במלוא הפוטנציאל — חתך אוכלוסיה קצת פחות מאשר לקומה אחת.</p>
+        <a class="model-card a" href="https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/cibola" target="_blank" style="display:inline-block;font-size:0.7rem;color:var(--gold);text-decoration:none;margin-top:6px;">דוגמה בלנאר: Cibola ←</a>
+      </div>
+      <div class="type-col">
+        <div class="type-col-title">קומה אחת</div>
+        <div class="type-col-sub">עטוף אבן לרוב, 2 גראז׳</div>
+        <img src="https://cdn.lennar.com/api/images/contentassets/f733edbd7e48429585d5235c76e0d4af/copy-of-copy-of-grove_core_hou_3330_rend_ramsey_j.jpg?w=500" style="width:100%;border-radius:6px;margin-bottom:8px;" />
+        <p><b>יתרון:</b> 2 גראז׳, אין מדרגות, גינה גדולה יותר.</p>
+        <p><b>חסרון:</b> יותר הוצאות תחזוקה בגלל 2 גראז׳ וגינה גדולה יותר וגג גדול יותר, ועלות גבוהה יותר ביחס לבתים של ה-2 קומות.</p>
+        <a href="https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/ramsey" target="_blank" style="display:inline-block;font-size:0.7rem;color:var(--gold);text-decoration:none;margin-top:6px;">דוגמה בלנאר: Ramsey ←</a>
+      </div>
+    </div>
+    <div class="bottom-note">
+      <b>בפועל:</b> בטבעיות אנחנו מעדיפים את ה׳קומה אחת׳ במיוחד אחרי שהיינו שם, אבל המציאות מראה שכל מי שקנה 2 קומות משכיר בקלות ואז התשואה הייתה גבוהה יותר כי המחיר שכירות לא היה שונה מאשר בקומה אחת (ברור שאם אדם יעמוד מול זה ומול זה כנראה יסכים לשלם קצת יותר על קומה אחת).
+    </div>
+  </div>
+</div>
+
+<!-- Available models -->
+<div class="section">
+  <div class="section-title" onclick="this.parentElement.classList.toggle('open')">
+    📋 דגמים זמינים
+    <span class="section-arrow">▸</span>
+  </div>
+  <div class="section-body">
+    <p style="opacity:0.5;margin-bottom:10px;font-size:0.72rem;">לחצו על דגם לפרטים באתר לנאר — כולל תוכנית הבית, תמונות פנים, וסיור וירטואלי</p>
+
+    <p style="font-weight:600;margin-top:12px;margin-bottom:6px;">Sila — האפמן</p>
+    <div class="models-grid">
+      <div class="model-card">
+        <img src="https://cdn.lennar.com/api/images/contentassets/f733edbd7e48429585d5235c76e0d4af/copy-of-copy-of-grove_core_hou_3330_rend_ramsey_j.jpg?w=500" />
+        <div class="model-card-body">
+          <div class="model-card-name">Ramsey</div>
+          <div class="model-card-specs">4 חד׳ · 2 שירותים · 1,720 sqft · קומה 1 · 2 גראז׳</div>
+          <div class="model-card-price">$180K–$200K</div>
+        </div>
+        <a href="https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/ramsey" target="_blank">צפה בלנאר ←</a>
+      </div>
+      <div class="model-card">
+        <img src="https://cdn.lennar.com/api/images/contentassets/c4e46e7d09f84f2aba33c3aec1c8ad08/san_1531_wellton_astonpark_rend_cibola_c.jpg?w=500" />
+        <div class="model-card-body">
+          <div class="model-card-name">Cibola</div>
+          <div class="model-card-specs">4 חד׳ · 3 שירותים · 1,535 sqft · 2 קומות · 1 גראז׳</div>
+          <div class="model-card-price">$160K–$170K</div>
+        </div>
+        <a href="https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/cibola" target="_blank">צפה בלנאר ←</a>
+      </div>
+      <div class="model-card">
+        <img src="https://cdn.lennar.com/api/images/contentassets/c6a0c35a474041cfb559ee26b055941f/san_1521_wellton_ashtonpark_rend_pima_d.jpg?w=500" />
+        <div class="model-card-body">
+          <div class="model-card-name">Pima</div>
+          <div class="model-card-specs">3 חד׳ · 3 שירותים · 1,360 sqft · 2 קומות · 1 גראז׳</div>
+          <div class="model-card-price">$150K–$160K</div>
+        </div>
+        <a href="https://www.lennar.com/new-homes/texas/houston/huffman/sila/wellton-collection/pima" target="_blank">צפה בלנאר ←</a>
+      </div>
+      <div class="model-card">
+        <img src="https://cdn.lennar.com/api/images/contentassets/11521569e4664d31a4de857c5791a1e9/copy-of-copy-of-grove_core_hou_3320_rend_newlin_m1_111924.jpg?w=500" />
+        <div class="model-card-body">
+          <div class="model-card-name">Newlin</div>
+          <div class="model-card-specs">3 חד׳ · 2 שירותים · 1,522 sqft · קומה 1 · 2 גראז׳</div>
+          <div class="model-card-price">$170K–$190K</div>
+        </div>
+        <a href="https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/newlin" target="_blank">צפה בלנאר ←</a>
+      </div>
+      <div class="model-card">
+        <img src="https://cdn.lennar.com/api/images/contentassets/565d42e668eb45f5b5b33b17a85974c1/copy-of-copy-of-copy-of-copy-of-grove_core_hou_3310_rend_beckman_j.jpg?w=500" />
+        <div class="model-card-body">
+          <div class="model-card-name">Beckman</div>
+          <div class="model-card-specs">3 חד׳ · 2 שירותים · 1,302 sqft · קומה 1 · 2 גראז׳</div>
+          <div class="model-card-price">$160K–$180K</div>
+        </div>
+        <a href="https://www.lennar.com/new-homes/texas/houston/huffman/sila/watermill-collection/beckman" target="_blank">צפה בלנאר ←</a>
+      </div>
+    </div>
+
+    <p style="font-weight:600;margin-top:18px;margin-bottom:6px;">Indian Springs — קרוסבי</p>
+    <div class="models-grid">
+      <div class="model-card">
+        <img src="https://cdn.lennar.com/api/images/contentassets/9858f72770384bf7a299b304419a6119/copy-of-copy-of-copy-of-copy-of-grove_core_hou_2520_rend_kitson_h.jpg?w=500" />
+        <div class="model-card-body">
+          <div class="model-card-name">Kitson</div>
+          <div class="model-card-specs">3 חד׳ · 2 שירותים · 1,409 sqft · קומה 1 · 2 גראז׳</div>
+          <div class="model-card-price">$190K–$210K</div>
+        </div>
+        <a href="https://www.lennar.com/new-homes/texas/houston/crosby/indian-springs/cottage-collection/kitson" target="_blank">צפה בלנאר ←</a>
+      </div>
+      <div class="model-card">
+        <img src="https://cdn.lennar.com/api/images/contentassets/c4e46e7d09f84f2aba33c3aec1c8ad08/san_1531_wellton_astonpark_rend_cibola_c.jpg?w=500" />
+        <div class="model-card-body">
+          <div class="model-card-name">Cibola</div>
+          <div class="model-card-specs">4 חד׳ · 3 שירותים · 1,535 sqft · 2 קומות · 1 גראז׳</div>
+          <div class="model-card-price">$170K–$190K</div>
+        </div>
+        <a href="https://www.lennar.com/new-homes/texas/houston/crosby/indian-springs/wellton-collection/cibola" target="_blank">צפה בלנאר ←</a>
+      </div>
+      <div class="model-card">
+        <img src="https://cdn.lennar.com/api/images/contentassets/c6a0c35a474041cfb559ee26b055941f/san_1521_wellton_ashtonpark_rend_pima_d.jpg?w=500" />
+        <div class="model-card-body">
+          <div class="model-card-name">Pima</div>
+          <div class="model-card-specs">3 חד׳ · 3 שירותים · 1,360 sqft · 2 קומות · 1 גראז׳</div>
+          <div class="model-card-price">$160K–$170K</div>
+        </div>
+        <a href="https://www.lennar.com/new-homes/texas/houston/crosby/indian-springs/wellton-collection/pima" target="_blank">צפה בלנאר ←</a>
+      </div>
+    </div>
+
+    <p style="font-weight:600;margin-top:18px;margin-bottom:6px;">Synova — קרוסבי</p>
+    <div class="models-grid">
+      <div class="model-card">
+        <img src="https://cdn.lennar.com/api/images/contentassets/181aeaa2ade64692a8e73365f7d7e41e/copy-of-copy-of-grove_core_hou_2550_rend_pinehollow_h.jpg?w=500" />
+        <div class="model-card-body">
+          <div class="model-card-name">Pinehollow</div>
+          <div class="model-card-specs">4 חד׳ · 2 שירותים · 1,656 sqft · קומה 1 · 2 גראז׳</div>
+          <div class="model-card-price">$190K–$210K</div>
+        </div>
+        <a href="https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/pinehollow" target="_blank">צפה בלנאר ←</a>
+      </div>
+      <div class="model-card">
+        <img src="https://cdn.lennar.com/api/images/contentassets/9858f72770384bf7a299b304419a6119/copy-of-copy-of-copy-of-copy-of-grove_core_hou_2520_rend_kitson_j.jpg?w=500" />
+        <div class="model-card-body">
+          <div class="model-card-name">Kitson</div>
+          <div class="model-card-specs">3 חד׳ · 2 שירותים · 1,409 sqft · קומה 1 · 2 גראז׳</div>
+          <div class="model-card-price">$190K–$210K</div>
+        </div>
+        <a href="https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/kitson" target="_blank">צפה בלנאר ←</a>
+      </div>
+      <div class="model-card">
+        <img src="https://cdn.lennar.com/api/images/contentassets/f57016424c8f49ffa759ecbb4cab36b5/copy-of-copy-of-grove_core_hou_2560_rend_whitetail_h.jpg?w=500" />
+        <div class="model-card-body">
+          <div class="model-card-name">Whitetail</div>
+          <div class="model-card-specs">4 חד׳ · 3 שירותים · 2,039 sqft · קומה 1 · 2 גראז׳</div>
+          <div class="model-card-price">$210K–$230K</div>
+        </div>
+        <a href="https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/whitetail" target="_blank">צפה בלנאר ←</a>
+      </div>
+      <div class="model-card">
+        <img src="https://cdn.lennar.com/api/images/contentassets/565d42e668eb45f5b5b33b17a85974c1/copy-of-copy-of-grove_core_hou_3310_rend_beckman_m1_111824.jpg?w=500" />
+        <div class="model-card-body">
+          <div class="model-card-name">Beckman</div>
+          <div class="model-card-specs">3 חד׳ · 2 שירותים · 1,302 sqft · קומה 1 · 2 גראז׳</div>
+          <div class="model-card-price">$175K–$195K</div>
+        </div>
+        <a href="https://www.lennar.com/new-homes/texas/houston/crosby/synova/cottage-collection/beckman" target="_blank">צפה בלנאר ←</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer links -->
+<div class="footer-links">
+  <a href="https://prismatic-eclair-36aa7c.netlify.app/" target="_blank">📊 מחשבון השקעות</a>
+</div>
+
+</div>
+
+<script>
+// Map
+const map = L.map('map', { zoomControl: true, attributionControl: false, scrollWheelZoom: false }).setView([29.98, -95.08], 11);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
+
+const locations = [
+  { lat: 30.005, lng: -95.076, name: 'Sila · האפמן' },
+  { lat: 29.983, lng: -95.078, name: 'Indian Springs · קרוסבי' },
+  { lat: 29.952, lng: -95.085, name: 'Synova · קרוסבי' },
+];
+
+locations.forEach(loc => {
+  const icon = L.divIcon({
+    className: '',
+    html: `<div style="background:var(--gold);color:#000;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;white-space:nowrap;font-family:Heebo;">${loc.name}</div>`,
+    iconAnchor: [50, 10]
+  });
+  L.marker([loc.lat, loc.lng], { icon }).addTo(map);
+});
+
+// Open first sections by default (already open via class)
+</script>
+</body>
+</html>
