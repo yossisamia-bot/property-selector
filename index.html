@@ -113,6 +113,30 @@
   }
   .map-area-btn:hover { background:var(--blue); color:var(--dark); }
 
+  .home-types-box {
+    max-width: 1200px; margin: 0 auto 16px; background: var(--card-bg);
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  }
+  .home-types-title {
+    padding: 10px 20px; font-weight: 600; font-size: 0.85rem;
+    color: var(--gold); cursor: pointer; font-family: 'Heebo', sans-serif;
+  }
+  .home-types-content {
+    padding: 4px 20px 12px; display: none;
+  }
+  .home-types-content.open { display: block; }
+  .home-types-content p {
+    font-size: 0.75rem; color: var(--muted); margin: 4px 0; line-height: 1.6;
+    font-family: 'Heebo', sans-serif;
+  }
+  .nbhd-desc {
+    padding: 8px 20px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nbhd-desc p {
+    font-size: 0.75rem; color: var(--muted); margin: 4px 0; line-height: 1.6;
+    font-family: 'Heebo', sans-serif;
+  }
   .nbhd-cards {
     display:flex;
     flex-wrap:wrap;
@@ -365,6 +389,10 @@
   
 </div>
 
+<div class="home-types-box">
+  <div class="home-types-title">🏠 סוגי בתים — קומה אחת מול 2 קומות</div>
+  <div class="home-types-content" id="homeTypesContent"></div>
+</div>
 <div class="neighborhoods" id="nbhdContainer"></div>
 
 <div class="footer-cta" id="footerCta">
@@ -381,6 +409,12 @@ const rentState = {};
 const NEIGHBORHOODS = [
   {
     id: 'sila',
+      desc: `ליד ניו קאני, יותר צפונה. שכר ראשון (Fee A).
+מחירים ממש נמוכים ביחס להכל — כמו כל שכונה זו יסתיים מיד שיעברו לשלב ב׳ ולא נוכל להשיג כזה מחיר. זה ממש מתחת למחיר בניה עד כדי בית 1,433 סקופט ב-1,505 דולר (כלומר 95 דולר לסקוור פיט) זה פחות ממה שעולה להם לבנות אותם ברווח הזו.
+ככל מקום צריך להבין שכונה, שקלים פחות, והביא ישכר מיידית.
+אנחנו עובדים גם עם רילוקישנרים וחברות תיווך רבות. להבדיל מחברות ניהול נכסים שמשכונה לעבוד רק שמקבלים מפתח מיד עם חתימת החוזה.
+אנחנו נמתיל לשווק את הבית לשכירות מידית. כדי לצמצם המתנה — EARNEST MONEY.
+מיקום צפוני — קרוב לשדה תעופה ולקליבלנד. קרוב ליוסטון ישן קומיוניטי שעדיין בונים בתים כבתים. בתים בניו קאני (עיירה צמודה) נמכרים ב-60-50 אלף יותר. לדעתנו שנתיים חיים זה אותם שכונות.`,
     name: 'Sila',
     cityHe: 'האפמן', cityEn: 'Huffman',
     hoa: 1500,
@@ -450,6 +484,10 @@ const NEIGHBORHOODS = [
   },
   {
     id: 'indian-springs',
+      desc: `קרוסבי — קרובה יותר לנמל ולכל התעשייה: גז/נפט, מניפקטורי, נמל וכו׳. קצרה יותר קרוב ליוסטון לי אדם יפצפה. הרבה פיתוח מסביב ומקומות עבודה.
+מחירים מאוד אטרקטיביים גם לשכירות (כבר גבוהה יותר מסילה אבל עדיין אטרקטיבית) בין לשכונות מפותחות.
+לדעתינו מבחינה שווי בעתיד אין סיבה שסילה וקרוסבי לא יגיעו לאותו מקום אבל קרוסבי יותר קל להשכיר מהר מאוד את הבתים (לא מובטח כלום).
+כי השכונה כבר יותר מתקדמת. מצד שני מראש משלמים יותר על הבתים.`,
     name: 'Indian Springs',
     cityHe: 'קרוסבי', cityEn: 'Crosby',
     hoa: 1500,
@@ -497,6 +535,10 @@ const NEIGHBORHOODS = [
   },
   {
     id: 'synova',
+      desc: `קרוסבי — קרובה יותר לנמל ולכל התעשייה: גז/נפט, מניפקטורי, נמל וכו׳. קצרה יותר קרוב ליוסטון לי אדם יפצפה. הרבה פיתוח מסביב ומקומות עבודה.
+מחירים מאוד אטרקטיביים גם לשכירות (כבר גבוהה יותר מסילה אבל עדיין אטרקטיבית) בין לשכונות מפותחות.
+לדעתינו מבחינה שווי בעתיד אין סיבה שסילה וקרוסבי לא יגיעו לאותו מקום אבל קרוסבי יותר קל להשכיר מהר מאוד את הבתים (לא מובטח כלום).
+כי השכונה כבר יותר מתקדמת. מצד שני מראש משלמים יותר על הבתים.`,
     name: 'Synova',
     cityHe: 'קרוסבי', cityEn: 'Crosby',
     hoa: 1500,
@@ -567,6 +609,13 @@ if (_clientName) {
 }
 
 // Filter neighborhoods & properties based on URL
+const HOME_TYPES_TEXT = `קומה כל תמיד 3 חדרי שינה ומעלה.
+2 קומות מעט זה — עם גראז׳ 1. יתרון — מעט הוצאות, גינה קטנה, מחיר נמוך יותר, מבחינת השכרה תשואה עשויה להיות מעולה כי המחיר רכישה נמוך מאוד.
+חסרון — גינה קטנה, גראז׳ 1, מדרגות, ובשווי בתים ישראים קצת פחות טוב. הערך לא תמיד יעלה במלוא הפוטנציאל — חתך אוכלוסיה קצת פחות מאשר לקומה אחת.
+בית קומה אחת — עטוף אבן לרוב. יתרון — 2 גראז׳, אין מדרגות, גינה גדולה יותר.
+חסרון — יותר הוצאות תחזוקה בגלל 2 גראז׳ וגינה גדולה יותר וגג גדול יותר, ועלות גבוהה יותר ביחס לבתים של ה-2 קומות.
+בפועל — בטבעיות מעדיפים את הקומה אחת בגלל אחרי שהיינו שם, אבל המציאות מראה שכל מי שקונה 2 קומות משכיר בקלות ואז התשואה היתה גבוהה יותר כי המחיר שכירות לא היה שונה מאשר בקומה אחת (ברור שאם אדם יעמוד מול זה ומול זה הנראה יסכים לשלם קצת יותר על קומה אחת).`;
+
 const DISPLAY_NEIGHBORHOODS = _models
   ? NEIGHBORHOODS.map(n => ({
       ...n,
@@ -679,6 +728,8 @@ function renderAll() {
           <a class="map-area-btn" href="${n.mapUrl}" target="_blank">צילום אוויר</a>
         </div>
       </div>
+      ${n.desc ? '<div class="nbhd-desc">' + n.desc.split('
+').map(line => '<p>' + line + '</p>').join('') + '</div>' : ''}
       <div class="nbhd-cards">
         ${n.properties.map(p => renderCard(p, n)).join('')}
       </div>
@@ -733,6 +784,13 @@ function renderCard(p, n) {
     </div>
   `;
 }
+
+// Populate home types
+document.querySelector('.home-types-title').onclick = function() {
+  document.getElementById('homeTypesContent').classList.toggle('open');
+};
+document.getElementById('homeTypesContent').innerHTML = HOME_TYPES_TEXT.split('
+').map(l => '<p>' + l + '</p>').join('');
 
 renderAll();
 
