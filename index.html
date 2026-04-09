@@ -356,30 +356,7 @@
   <button class="map-strip-btn" onclick="expandMap()">חזרה למפה</button>
 </div>
 
-<div class="controls">
-  <div class="ctrl-box">
-    <div class="ctrl-title">אחוז מימון</div>
-    <div class="fin-input-wrap">
-      <span class="fin-input-label">מימון:</span>
-      <div class="fin-input-field">
-        <input type="number" id="finInput" value="0" min="0" max="90" step="5"
-               oninput="onFinInput(this.value)" />
-        <span>%</span>
-      </div>
-      <div class="fin-quick">
-        <button class="fin-quick-btn" onclick="setFinTo(0)">0%</button>
-        <button class="fin-quick-btn" onclick="setFinTo(50)">50%</button>
-        <button class="fin-quick-btn" onclick="setFinTo(70)">70%</button>
-        <button class="fin-quick-btn" onclick="setFinTo(80)">80%</button>
-      </div>
-    </div>
-    <div class="rate-row hidden" id="rateRow">
-      <span>ריבית שנתית:</span>
-      <input type="range" min="5" max="9" step="0.25" value="7" oninput="setRate(this.value)">
-      <span class="rate-val" id="rateLabel">7.00%</span>
-    </div>
-  </div>
-</div>
+
 
 <div class="intro">
   <h1>בחרו שכונה ומודל</h1>
