@@ -275,8 +275,6 @@
   .select-btn:hover { border-color:var(--gold); color:var(--gold); }
   .card.selected .select-btn { background:var(--gold); color:var(--dark); border-color:var(--gold); font-weight:700; }
 
-  .card-links { display: flex; gap: 6px; }
-  .floorplan-link { background: #1a2744 !important; }
   .lennar-link {
     font-size:10px; color:var(--blue); text-decoration:none; text-align:center; display:block; margin-top:4px;
   }
@@ -790,10 +788,7 @@ function renderCard(p, n) {
 
 
         <button class="select-btn">בחר מודל זה</button>
-        <div class="card-links">
-          <a class="lennar-link" href="${p.lennarUrl}" target="_blank" onclick="event.stopPropagation()">צפה בלנאר</a>
-          <a class="lennar-link floorplan-link" href="${p.floorplanUrl || (p.lennarUrl + '/walkthrough')}" target="_blank" onclick="event.stopPropagation()">📐 תוכנית</a>
-        </div>
+        <a class="lennar-link" href="${p.lennarUrl}" target="_blank" onclick="event.stopPropagation()">צפה בלנאר</a>
       </div>
     </div>
   `;
